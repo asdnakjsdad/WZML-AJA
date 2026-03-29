@@ -3,7 +3,7 @@ BOT_TOKEN = "2008530370:AAHQiwitN3ORhqE3zJZwd0gIcvO3p3rA1YE"
 OWNER_ID = 880840289
 TELEGRAM_API = 2525401
 TELEGRAM_HASH = "270eb47c726800d2f5342e36df338419"
-DATABASE_URL = "https://beldabot-5c6fad6bb84f.herokuapp.com/"
+DATABASE_URL = "mongodb+srv://yunusbjm_db_user:iwakpeda007@cluster0.fppcrkb.mongodb.net/?appName=Cluster0"
 
 # OPTIONAL CONFIG
 DEFAULT_LANG = "en"
@@ -174,7 +174,7 @@ MIRROR_LOG_ID = ""
 
 # qBittorrent/Aria2c
 TORRENT_TIMEOUT = 0
-BASE_URL = ""
+BASE_URL = "https://beldabot-5c6fad6bb84f.herokuapp.com/"
 BASE_URL_PORT = 0
 WEB_PINCODE = True
 
