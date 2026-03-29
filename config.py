@@ -174,7 +174,7 @@ MIRROR_LOG_ID = ""
 
 # qBittorrent/Aria2c
 TORRENT_TIMEOUT = 0
-BASE_URL = "https://beldabot-81fd4a0e9c27.herokuapp.com/"
+BASE_URL = ""
 BASE_URL_PORT = 0
 WEB_PINCODE = True
 
