@@ -292,7 +292,7 @@ Here I will explain how to use mltb.* which is reference to files you want to wo
 
 async def get_user_settings(from_user, stype="main"):
     user_id = from_user.id
-    user_name = from_user.mention(style="html")
+    user_name = from_user.mention(style="html") if hasattr(from_user, 'mention') else f"<b>{from_user.title}</b>"
     buttons = ButtonMaker()
     rclone_conf = f"rclone/{user_id}.conf"
     token_pickle = f"tokens/{user_id}.pickle"
