@@ -151,7 +151,7 @@ USENET_SERVERS = [
 
 # Update
 UPSTREAM_REPO = "https://github.com/asdnakjsdad/WZML-AJA"
-UPSTREAM_BRANCH = "master"
+UPSTREAM_BRANCH = "wzv3"
 UPDATE_PKGS = True
 
 # Leech
