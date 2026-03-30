@@ -99,7 +99,7 @@ LOGIN_PASS = ""
 # Bot Settings
 BOT_PM = False
 SET_COMMANDS = True
-TIMEZONE = "Asia/Kolkata"
+TIMEZONE = "Asia/Makassar"
 
 # GDrive Tools
 GDRIVE_ID = ""
