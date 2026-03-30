@@ -931,7 +931,7 @@ async def update_user_settings(query, stype="main"):
 
 @new_task
 async def send_user_settings(_, message):
-    from_user = message.from_user
+    from_user = message.from_user if message.from_user else message.sender_chat
     user_id = message.from_user.id if message.from_user else message.sender_chat.id
     handler_dict[user_id] = False
     msg, button = await get_user_settings(from_user)
