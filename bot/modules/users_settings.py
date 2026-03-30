@@ -335,7 +335,7 @@ async def get_user_settings(from_user, stype="main"):
 ┠ <b>UserID</b> → #ID{user_id}
 ┠ <b>Username</b> → @{from_user.username}
 ┠ <b>Telegram DC</b> → {from_user.dc_id}
-┖ <b>Telegram Lang</b> → {Language.get(lc).display_name() if (lc := from_user.language_code) else "N/A"}"""
+┖ <b>Telegram Lang</b> → {Language.get(lc).display_name() if (lc := getattr(from_user, 'language_code', None)) else "N/A"}"""
 
         btns = buttons.build_menu(2)
 
