@@ -234,7 +234,20 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
         elapsed = time() - task.listener.message.date.timestamp()
 
         user = task.listener.message.from_user or task.listener.message.sender_chat
-        name = getattr(user, 'mention', lambda style: getattr(user, 'title', 'Sistem'))('html')
+        user = task.listener.message.from_user
+        sender = task.listener.message.sender_chat
+    
+        if user:
+            name = user.mention(style='html')
+            uid = user.id
+        elif sender:
+            name = sender.title
+            uid = sender.id
+        else:
+            name = "Sistem"
+            uid = "Unknown"
+    
+        msg += f"\n\n<b>Task By {name} </b> ( #ID{uid} )"
         msg += f"\n\n<b>Task By {name} </b> ( #ID{user.id if user else 'N/A'} )"
         if task.listener.is_super_chat:
             msg += f" <i>[<a href='{task.listener.message.link}'>Link</a>]</i>"
