@@ -180,3 +180,7 @@ async def cancel_all_update(_, query):
         res = await cancel_all(data[1], user_id)
         if not res:
             await send_message(reply_to, f"Tidak ada tugas {data[1]} yang cocok!")
+
+@new_task
+async def get_cancel_message():
+    return "Dibatalkan oleh pengguna!"
