@@ -115,7 +115,7 @@ async def restart_sessions_confirm(_, query):
     message = query.message
     if data[1] == "confirm":
         reply_to = message.reply_to_message
-        restart_message = await send_message(reply_to, "Restarting Session(s)...")
+        restart_message = await send_message(reply_to, "Sedang Memulai Ulang Sesi...")
         await delete_message(message)
         await TgClient.reload()
         add_handlers()
@@ -125,7 +125,7 @@ async def restart_sessions_confirm(_, query):
                 filters=regex("^sessionrestart") & CustomFilters.sudo,
             )
         )
-        await edit_message(restart_message, "Session(s) Restarted Successfully!")
+        await edit_message(restart_message, "Sesi Berhasil Dimulai Ulang!")
     else:
         await delete_message(message)
 
@@ -137,5 +137,5 @@ TgClient.bot.add_handler(
     )
 )
 
-LOGGER.info("WZ Client(s) & Services Started !")
+LOGGER.info("Klien & Layanan WZ Berhasil Dinyalakan!")
 bot_loop.run_forever()
