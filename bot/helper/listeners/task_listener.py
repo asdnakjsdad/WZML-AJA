@@ -536,7 +536,7 @@ class TaskListener(TaskConfig):
                 button = None
             msg += f"\n┃\n┖ <b>Tugas Oleh</b> → {self.tag}\n\n"
             group_msg = (
-                msg + "〶 <b><u>Tindakan Dilakukan :</u></b>\n"
+                msg + "㶌 <b><u>Tindakan Dilakukan :</u></b>\n"
                 "⋗ <i>Tautan cloud telah dikirim ke PM Pengguna</i>\n\n"
             )
 
@@ -589,14 +589,14 @@ class TaskListener(TaskConfig):
             count = len(task_dict)
         await self.remove_from_same_dir()
         msg = (
-            f"""〶 <b><i><u>Batas Terlampaui:</u></i></b>
+            f"""㶌 <b><i><u>Batas Terlampaui:</u></i></b>
 │
 ┟ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}
 ┠ <b>Mode Masuk</b> → {self.mode[0]}
 ┠ <b>Mode Keluar</b> → {self.mode[1]}
 {error}"""
             if is_limit
-            else f"""<i><b>〶 Unduhan Berhenti!</b></i>
+            else f"""<i><b>㶌 Unduhan Berhenti!</b></i>
 │
 ┟ <b>Karena</b> → {escape(str(error))}
 ┠ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}
