@@ -65,59 +65,59 @@ async def get_stats(event, key="home"):
     btns = ButtonMaker()
     if key == "home":
         btns = ButtonMaker()
-        btns.data_button("Bot Stats", f"stats {user_id} stbot")
-        btns.data_button("OS Stats", f"stats {user_id} stsys")
-        btns.data_button("Repo Stats", f"stats {user_id} strepo")
-        btns.data_button("Pkgs Stats", f"stats {user_id} stpkgs")
-        btns.data_button("Task Limits", f"stats {user_id} tlimits")
-        btns.data_button("Sys Tasks", f"stats {user_id} systasks")
-        msg = "⌬ <b><i>Bot & OS Statistics!</i></b>"
+        btns.data_button("Statistik Bot", f"stats {user_id} stbot")
+        btns.data_button("Statistik OS", f"stats {user_id} stsys")
+        btns.data_button("Statistik Repo", f"stats {user_id} strepo")
+        btns.data_button("Statistik Paket", f"stats {user_id} stpkgs")
+        btns.data_button("Batas Tugas", f"stats {user_id} tlimits")
+        btns.data_button("Tugas Sistem", f"stats {user_id} systasks")
+        msg = "⌬ <b><i>Statistik Bot & Sistem Operasi!</i></b>"
     elif key == "stbot":
         total, used, free, disk = disk_usage("/")
         swap = swap_memory()
         memory = virtual_memory()
         disk_io = disk_io_counters()
-        msg = f"""⌬ <b><i>BOT STATISTICS :</i></b>
-┖ <b>Bot Uptime :</b> {get_readable_time(time() - bot_start_time)}
+        msg = f"""⌬ <b><i>STATISTIK BOT :</i></b>
+┖ <b>Waktu Aktif Bot :</b> {get_readable_time(time() - bot_start_time)}
 
-┎ <b><i>RAM ( MEMORY ) :</i></b>
+┎ <b><i>RAM ( MEMORI ) :</i></b>
 ┃ {get_progress_bar_string(memory.percent)} {memory.percent}%
-┖ <b>U :</b> {get_readable_file_size(memory.used)} | <b>F :</b> {get_readable_file_size(memory.available)} | <b>T :</b> {get_readable_file_size(memory.total)}
+┖ <b>Terpakai :</b> {get_readable_file_size(memory.used)} | <b>Kosong :</b> {get_readable_file_size(memory.available)} | <b>Total :</b> {get_readable_file_size(memory.total)}
 
-┎ <b><i>SWAP MEMORY :</i></b>
+┎ <b><i>MEMORI SWAP :</i></b>
 ┃ {get_progress_bar_string(swap.percent)} {swap.percent}%
-┖ <b>U :</b> {get_readable_file_size(swap.used)} | <b>F :</b> {get_readable_file_size(swap.free)} | <b>T :</b> {get_readable_file_size(swap.total)}
+┖ <b>Terpakai :</b> {get_readable_file_size(swap.used)} | <b>Kosong :</b> {get_readable_file_size(swap.free)} | <b>Total :</b> {get_readable_file_size(swap.total)}
 
-┎ <b><i>DISK :</i></b>
+┎ <b><i>DISK (PENYIMPANAN) :</i></b>
 ┃ {get_progress_bar_string(disk)} {disk}%
-┃ <b>Total Disk Read :</b> {f"{get_readable_file_size(disk_io.read_bytes)} ({get_readable_time(disk_io.read_time / 1000)})" if disk_io else "Access Denied"}
-┃ <b>Total Disk Write :</b> {f"{get_readable_file_size(disk_io.write_bytes)} ({get_readable_time(disk_io.write_time / 1000)})" if disk_io else "Access Denied"}
+┃ <b>Total Baca Disk :</b> {f"{get_readable_file_size(disk_io.read_bytes)} ({get_readable_time(disk_io.read_time / 1000)})" if disk_io else "Akses Ditolak"}
+┃ <b>Total Tulis Disk :</b> {f"{get_readable_file_size(disk_io.write_bytes)} ({get_readable_time(disk_io.write_time / 1000)})" if disk_io else "Akses Ditolak"}
 ┖ <b>U :</b> {get_readable_file_size(used)} | <b>F :</b> {get_readable_file_size(free)} | <b>T :</b> {get_readable_file_size(total)}
 """
     elif key == "stsys":
         cpu_usage = cpu_percent(interval=0.5)
-        msg = f"""⌬ <b><i>OS SYSTEM :</i></b>
-┟ <b>OS Uptime :</b> {get_readable_time(time() - boot_time())}
-┠ <b>OS Version :</b> {version()}
-┖ <b>OS Arch :</b> {platform()}
+        msg = f"""⌬ <b><i>SISTEM OPERASI :</i></b>
+┟ <b>Waktu Aktif OS :</b> {get_readable_time(time() - boot_time())}
+┠ <b>Versi OS :</b> {version()}
+┖ <b>Arsitektur OS :</b> {platform()}
 
-⌬ <b><i>NETWORK STATS :</i></b>
-┟ <b>Upload Data:</b> {get_readable_file_size(net_io_counters().bytes_sent)}
-┠ <b>Download Data:</b> {get_readable_file_size(net_io_counters().bytes_recv)}
-┠ <b>Pkts Sent:</b> {str(net_io_counters().packets_sent)[:-3]}k
-┠ <b>Pkts Received:</b> {str(net_io_counters().packets_recv)[:-3]}k
-┖ <b>Total I/O Data:</b> {get_readable_file_size(net_io_counters().bytes_recv + net_io_counters().bytes_sent)}
+⌬ <b><i>STATISTIK JARINGAN :</i></b>
+┟ <b>Data Unggah:</b> {get_readable_file_size(net_io_counters().bytes_sent)}
+┠ <b>Data Unduh:</b> {get_readable_file_size(net_io_counters().bytes_recv)}
+┠ <b>Paket Terkirim:</b> {str(net_io_counters().packets_sent)[:-3]}k
+┠ <b>Paket Diterima:</b> {str(net_io_counters().packets_recv)[:-3]}k
+┖ <b>Total Data I/O:</b> {get_readable_file_size(net_io_counters().bytes_recv + net_io_counters().bytes_sent)}
 
 ┎ <b>CPU :</b>
 ┃ {get_progress_bar_string(cpu_usage)} {cpu_usage}%
-┠ <b>CPU Frequency :</b> {f"{cpu_freq().current / 1000:.2f} GHz" if cpu_freq() else "Access Denied"}
-┠ <b>System Avg Load :</b> {"%, ".join(str(round((x / cpu_count() * 100), 2)) for x in getloadavg())}%, (1m, 5m, 15m)
-┠ <b>P-Core(s) :</b> {cpu_count(logical=False)} | <b>V-Core(s) :</b> {cpu_count(logical=True) - cpu_count(logical=False)}
-┠ <b>Total Core(s) :</b> {cpu_count(logical=True)}
-┖ <b>Usable CPU(s) :</b> {len(Process().cpu_affinity())}
+┠ <b>Frekuensi CPU :</b> {f"{cpu_freq().current / 1000:.2f} GHz" if cpu_freq() else "Akses Ditolak"}
+┠ <b>Beban Rata-rata Sistem :</b> {"%, ".join(str(round((x / cpu_count() * 100), 2)) for x in getloadavg())}%, (1m, 5m, 15m)
+┠ <b>Core Fisik (P) :</b> {cpu_count(logical=False)} | <b>Core Virtual (V) :</b> {cpu_count(logical=True) - cpu_count(logical=False)}
+┠ <b>Total Core :</b> {cpu_count(logical=True)}
+┖ <b>CPU Dapat Digunakan :</b> {len(Process().cpu_affinity())}
 """
     elif key == "strepo":
-        last_commit, changelog = "No Data", "N/A"
+        last_commit, changelog = "Tidak Ada Data", "N/A"
         if await aiopath.exists(".git"):
             last_commit = (
                 await cmd_exec(
@@ -127,7 +127,7 @@ async def get_stats(event, key="home"):
             )[0]
             changelog = (
                 await cmd_exec(
-                    "git log -1 --pretty=format:'<code>%s</code> <b>By</b> %an'", True
+                    "git log -1 --pretty=format:'<code>%s</code> <b>Oleh</b> %an'", True
                 )
             )[0]
         official_v = (
@@ -136,18 +136,18 @@ async def get_stats(event, key="home"):
                 True,
             )
         )[0]
-        msg = f"""⌬ <b><i>Repo Statistics :</i></b>
+        msg = f"""⌬ <b><i>Statistik Repositori :</i></b>
 │
-┟ <b>Bot Updated :</b> {last_commit}
-┠ <b>Current Version :</b> {get_version()}
-┠ <b>Latest Version :</b> {official_v}
-┖ <b>Last ChangeLog :</b> {changelog}
+┟ <b>Bot Diperbarui :</b> {last_commit}
+┠ <b>Versi Saat Ini :</b> {get_version()}
+┠ <b>Versi Terbaru :</b> {official_v}
+┖ <b>Log Perubahan Terakhir :</b> {changelog}
 
-⌬ <b>REMARKS :</b> <code>{compare_versions(get_version(), official_v)}</code>
+⌬ <b>KETERANGAN :</b> <code>{compare_versions(get_version(), official_v)}</code>
     """
     elif key == "stpkgs":
         ver = bot_cache.get("eng_versions", {})
-        msg = f"""⌬ <b><i>Packages Statistics :</i></b>
+        msg = f"""⌬ <b><i>Statistik Paket :</i></b>
 │
 ┟ <b>python:</b> {ver.get("python", "N/A")}
 ┠ <b>aria2:</b> {ver.get("aria2", "N/A")}
@@ -163,27 +163,27 @@ async def get_stats(event, key="home"):
 ┖ <b>Mega CMD:</b> {ver.get("mega", "N/A")}
 """
     elif key == "tlimits":
-        msg = f"""⌬ <b><i>Bot Task Limits :</i></b>
+        msg = f"""⌬ <b><i>Batas Tugas Bot :</i></b>
 │
-┟ <b>Direct Limit :</b> {Config.DIRECT_LIMIT or "∞"} GB
-┠ <b>Torrent Limit :</b> {Config.TORRENT_LIMIT or "∞"} GB
-┠ <b>GDriveDL Limit :</b> {Config.GD_DL_LIMIT or "∞"} GB
-┠ <b>RCloneDL Limit :</b> {Config.RC_DL_LIMIT or "∞"} GB
-┠ <b>Clone Limit :</b> {Config.CLONE_LIMIT or "∞"} GB
-┠ <b>JDown Limit :</b> {Config.JD_LIMIT or "∞"} GB
-┠ <b>NZB Limit :</b> {Config.NZB_LIMIT or "∞"} GB
-┠ <b>YT-DLP Limit :</b> {Config.YTDLP_LIMIT or "∞"} GB
-┠ <b>Playlist Limit :</b> {Config.PLAYLIST_LIMIT or "∞"}
-┠ <b>Mega Limit :</b> {Config.MEGA_LIMIT or "∞"} GB
-┠ <b>Leech Limit :</b> {Config.LEECH_LIMIT or "∞"} GB
-┠ <b>Archive Limit :</b> {Config.ARCHIVE_LIMIT or "∞"} GB
-┠ <b>Extract Limit :</b> {Config.EXTRACT_LIMIT or "∞"} GB
-┞ <b>Threshold Storage :</b> {Config.STORAGE_LIMIT or "∞"} GB
+┟ <b>Batas Direct :</b> {Config.DIRECT_LIMIT or "∞"} GB
+┠ <b>Batas Torrent :</b> {Config.TORRENT_LIMIT or "∞"} GB
+┠ <b>Batas GDriveDL :</b> {Config.GD_DL_LIMIT or "∞"} GB
+┠ <b>Batas RCloneDL :</b> {Config.RC_DL_LIMIT or "∞"} GB
+┠ <b>Batas Clone :</b> {Config.CLONE_LIMIT or "∞"} GB
+┠ <b>Batas JDown :</b> {Config.JD_LIMIT or "∞"} GB
+┠ <b>Batas NZB :</b> {Config.NZB_LIMIT or "∞"} GB
+┠ <b>Batas YT-DLP :</b> {Config.YTDLP_LIMIT or "∞"} GB
+┠ <b>Batas Playlist :</b> {Config.PLAYLIST_LIMIT or "∞"}
+┠ <b>Batas Mega :</b> {Config.MEGA_LIMIT or "∞"} GB
+┠ <b>Batas Leech :</b> {Config.LEECH_LIMIT or "∞"} GB
+┠ <b>Batas Arsip :</b> {Config.ARCHIVE_LIMIT or "∞"} GB
+┠ <b>Batas Ekstrak :</b> {Config.EXTRACT_LIMIT or "∞"} GB
+┞ <b>Ambang Penyimpanan :</b> {Config.STORAGE_LIMIT or "∞"} GB
 │
-┟ <b>Token Validity :</b> {get_readable_time(Config.VERIFY_TIMEOUT) if Config.VERIFY_TIMEOUT else "Disabled"}
-┠ <b>User Time Limit :</b> {Config.USER_TIME_INTERVAL or "0"}s / task
-┠ <b>User Max Tasks :</b> {Config.USER_MAX_TASKS or "∞"}
-┖ <b>Bot Max Tasks :</b> {Config.BOT_MAX_TASKS or "∞"}
+┟ <b>Masa Aktif Token :</b> {get_readable_time(Config.VERIFY_TIMEOUT) if Config.VERIFY_TIMEOUT else "Dinonaktifkan"}
+┠ <b>Batas Waktu Pengguna :</b> {Config.USER_TIME_INTERVAL or "0"}dtk / tugas
+┠ <b>Tugas Maks Pengguna :</b> {Config.USER_MAX_TASKS or "∞"}
+┖ <b>Tugas Maks Bot :</b> {Config.BOT_MAX_TASKS or "∞"}
     """
 
     elif key == "systasks":
@@ -209,24 +209,24 @@ async def get_stats(event, key="home"):
         except Exception:
             processes = []
 
-        msg = "⌬ <b><i>System Tasks (High Usage)</i></b>\n│\n"
+        msg = "⌬ <b><i>Tugas Sistem (Penggunaan Tinggi)</i></b>\n│\n"
 
         if processes:
             for i, proc in enumerate(processes, 1):
-                name = proc.get("name", "Unknown")[:20]
+                name = proc.get("name", "Tidak Diketahui")[:20]
                 cpu = proc.get("cpu_percent", 0)
                 mem = proc.get("memory_percent", 0)
-                user = proc.get("username", "Unknown")[:10]
+                user = proc.get("username", "Tidak Diketahui")[:10]
                 msg += f"┠ <b>{i:2d}.</b> <code>{name}</code>\n┃    🔹 <b>CPU:</b> {cpu:.1f}% | <b>MEM:</b> {mem:.1f}%\n┃    👤 <b>User:</b> {user} | <b>PID:</b> {proc['pid']}\n"
                 btns.data_button(f"{i}", f"stats {user_id} killproc {proc['pid']}")
-            msg += "┃\n┖ <i>Click serial number to terminate process</i>"
+            msg += "┃\n┖ <i>Klik nomor urut untuk menghentikan proses</i>"
         else:
-            msg += "┃\n┖ <i>No high usage processes found</i>"
+            msg += "┃\n┖ <i>Tidak ditemukan proses dengan penggunaan tinggi</i>"
 
-        btns.data_button("🔄 Refresh", f"stats {user_id} systasks", "header")
+        btns.data_button("🔄 Segarkan", f"stats {user_id} systasks", "header")
 
-    btns.data_button("Back", f"stats {user_id} home", "footer")
-    btns.data_button("Close", f"stats {user_id} close", "footer")
+    btns.data_button("Kembali", f"stats {user_id} home", "footer")
+    btns.data_button("Tutup", f"stats {user_id} close", "footer")
     return msg, btns.build_menu(8 if key == "systasks" else 2)
 
 
@@ -242,13 +242,13 @@ async def stats_pages(_, query):
     message = query.message
     user_id = query.from_user.id
     if user_id != int(data[1]):
-        await query.answer("Not Yours!", show_alert=True)
+        await query.answer("Bukan Milikmu!", show_alert=True)
     elif data[2] == "close":
         await query.answer()
         await delete_message(message, message.reply_to_message)
     elif data[2] == "killproc":
         if data[2] == "systasks" and not await CustomFilters.owner(_, query):
-            await query.answer("Sorry! You cannot Kill System Tasks!", show_alert=True)
+            await query.answer("Maaf! Anda tidak bisa menghentikan Tugas Sistem!", show_alert=True)
             return
         pid = int(data[3])
         try:
@@ -258,17 +258,17 @@ async def stats_pages(_, query):
             await sleep(2)
             if process.is_running():
                 process.kill()
-                status = "🔥 Force killed"
+                status = "🔥 Paksa berhenti"
             else:
-                status = "✅ Terminated"
+                status = "✅ Dihentikan"
             await query.answer(f"{status}: {proc_name} (PID: {pid})", show_alert=True)
         except NoSuchProcess:
             await query.answer(
-                "❌ Process not found or already terminated!", show_alert=True
+                "❌ Proses tidak ditemukan atau sudah berhenti!", show_alert=True
             )
         except AccessDenied:
             await query.answer(
-                "❌ Access denied! Cannot kill this process.", show_alert=True
+                "❌ Akses ditolak! Tidak dapat menghentikan proses ini.", show_alert=True
             )
         except Exception as e:
             await query.answer(f"❌ Error: {str(e)}", show_alert=True)
@@ -277,7 +277,7 @@ async def stats_pages(_, query):
         await edit_message(message, msg, btns)
     else:
         if data[2] == "systasks" and not await CustomFilters.sudo(_, query):
-            await query.answer("Sorry! You cannot open System Tasks!", show_alert=True)
+            await query.answer("Maaf! Anda tidak bisa membuka Tugas Sistem!", show_alert=True)
             return
         await query.answer()
         msg, btns = await get_stats(query, data[2])
@@ -292,16 +292,16 @@ async def get_version_async(command, regex, timeout=5):
         match = research(regex, out)
         return match.group(1) if match else "-"
     except TimeoutError:
-        return "Timeout"
+        return "Waktu Habis"
     except Exception as e:
-        return f"Exception: {str(e)}"
+        return f"Eksepsi: {str(e)}"
 
 
 async def retry_mega_version():
     await sleep(60)
     command, regex = commands["mega"]
     version = await get_version_async(command, regex, timeout=10)
-    if version != "Timeout" and not version.startswith("Exception"):
+    if version != "Waktu Habis" and not version.startswith("Eksepsi"):
         bot_cache["eng_versions"]["mega"] = version
         LOGGER.info(f"MegaCMD Version Fetched: {version}")
     else:
@@ -317,16 +317,16 @@ async def get_packages_version():
         bot_cache["eng_versions"][tool] = ver
     if await aiopath.exists(".git"):
         last_commit = await cmd_exec(
-            "git log -1 --date=short --pretty=format:'%cd <b>From</b> %cr'", True
+            "git log -1 --date=short --pretty=format:'%cd <b>Dari</b> %cr'", True
         )
         last_commit = last_commit[0]
     else:
-        last_commit = "No UPSTREAM_REPO"
+        last_commit = "Tidak Ada UPSTREAM_REPO"
     bot_cache["commit"] = last_commit
 
-    if bot_cache["eng_versions"]["mega"] in ["Timeout", "N/A"] or bot_cache[
+    if bot_cache["eng_versions"]["mega"] in ["Waktu Habis", "N/A"] or bot_cache[
         "eng_versions"
-    ]["mega"].startswith("Exception"):
+    ]["mega"].startswith("Eksepsi"):
         bot_loop.create_task(retry_mega_version())
 
-    LOGGER.info("Fetched Package Versions!")
+    LOGGER.info("Versi Paket Telah Diambil!")
