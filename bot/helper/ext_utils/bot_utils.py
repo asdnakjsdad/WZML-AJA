@@ -45,31 +45,14 @@ def _build_command_usage(help_dict, command_key):
     cmd_list = list(help_dict.keys())[1:]
     temp_store = []
     cmd_pages = [cmd_list[i : i + 10] for i in range(0, len(cmd_list), 10)]
-    for i in range(1, len(cmd_pages) + 1):
-        for name in cmd_pages[i]:
-            buttons.data_button(name, f"help {command_key} {name}")
-        buttons.data_button("Kembali", f"help pre {command_key} {i - 1}")
-        buttons.data_button("Lanjut", f"help nex {command_key} {i + 1}")
-        buttons.data_button("Tutup", "help close", "footer")
-        temp_store.append(buttons.build_menu(2))
-    COMMAND_USAGE[command_key] = [help_dict["main"], *temp_store]
-    buttons.reset()
-
-
-def _build_command_usage(help_dict, command_key):
-    buttons = ButtonMaker()
-    cmd_list = list(help_dict.keys())[1:]
-    cmd_pages = [cmd_list[i : i + 10] for i in range(0, len(cmd_list), 10)]
-    temp_store = []
-
     for i, page in enumerate(cmd_pages):
         for name in page:
             buttons.data_button(name, f"help {command_key} {name} {i}")
         if len(cmd_pages) > 1:
             if i > 0:
-                buttons.data_button("⫷", f"help pre {command_key} {i - 1}")
+                buttons.data_button("⫷ Kembali", f"help pre {command_key} {i - 1}")
             if i < len(cmd_pages) - 1:
-                buttons.data_button("⫸", f"help nex {command_key} {i + 1}")
+                buttons.data_button("Lanjut ⫸", f"help nex {command_key} {i + 1}")
         buttons.data_button("Tutup", "help close", "footer")
         temp_store.append(buttons.build_menu(2))
         buttons.reset()
@@ -116,7 +99,7 @@ async def get_telegraph_list(telegraph_content):
     path = [
         (
             await telegraph.create_page(
-                title="Pencarian Drive Mirror-Leech-Bot", content=content
+                title="Pencarian File Beldabot", content=content
             )
         )["path"]
         for content in telegraph_content
@@ -124,7 +107,7 @@ async def get_telegraph_list(telegraph_content):
     if len(path) > 1:
         await telegraph.edit_telegraph(path, telegraph_content)
     buttons = ButtonMaker()
-    buttons.url_button("🔎 LIHAT", f"https://telegra.ph/{path[0]}")
+    buttons.url_button("🔎 LIHAT HASIL", f"https://telegra.ph/{path[0]}")
     return buttons.build_menu(1)
 
 
