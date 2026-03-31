@@ -588,17 +588,26 @@ class TaskListener(TaskConfig):
                 del task_dict[self.mid]
             count = len(task_dict)
         await self.remove_from_same_dir()
+        
+        # --- BAGIAN PENCEGAT PESAN ARIA2 (TAMBAHKAN INI) ---
+        error_str = str(error)
+        if "Stopped by user" in error_str or "Download cancelled" in error_str:
+            error_display = "Dibatalkan oleh pengguna!"
+        else:
+            error_display = escape(error_str)
+        # --------------------------------------------------
+
         msg = (
             f"""㶌 <b><i><u>Batas Terlampaui:</u></i></b>
 │
 ┟ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}
 ┠ <b>Mode Masuk</b> → {self.mode[0]}
 ┠ <b>Mode Keluar</b> → {self.mode[1]}
-{error}"""
+{error_display}""" # Ganti variabel error menjadi error_display
             if is_limit
             else f"""<i><b>㶌 Unduhan Berhenti!</b></i>
 │
-┟ <b>Karena</b> → {escape(str(error))}
+┟ <b>Karena</b> → {error_display}
 ┠ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}
 ┠ <b>Waktu Ditempuh</b> → {get_readable_time(time() - self.message.date.timestamp())}
 ┠ <b>Mode Masuk</b> → {self.mode[0]}
