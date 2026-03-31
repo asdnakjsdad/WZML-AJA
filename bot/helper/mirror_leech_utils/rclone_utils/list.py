@@ -29,7 +29,7 @@ async def path_updates(_, query, obj):
     message = query.message
     data = query.data.split()
     if data[1] == "cancel":
-        obj.remote = "Task has been cancelled!"
+        obj.remote = "Tugas telah dibatalkan!"
         obj.path = ""
         obj.listener.is_cancelled = True
         obj.event.set()
@@ -53,7 +53,7 @@ async def path_updates(_, query, obj):
         else:
             await obj.back_from_path()
     elif data[1] == "re":
-        # some remotes has space
+        # beberapa remote memiliki spasi
         data = query.data.split(maxsplit=2)
         obj.remote = data[2]
         await obj.get_path()
@@ -166,7 +166,7 @@ class RcloneList:
             await wait_for(self.event.wait(), timeout=self._timeout)
         except Exception:
             self.path = ""
-            self.remote = "Timed Out. Task has been cancelled!"
+            self.remote = "Waktu Habis. Tugas telah dibatalkan!"
             self.listener.is_cancelled = True
             self.event.set()
         finally:
@@ -206,50 +206,50 @@ class RcloneList:
         if items_no > LIST_LIMIT:
             for i in [1, 2, 4, 6, 10, 30, 50, 100]:
                 buttons.data_button(i, f"rcq ps {i}", position="header")
-            buttons.data_button("Previous", "rcq pre", position="footer")
-            buttons.data_button("Next", "rcq nex", position="footer")
+            buttons.data_button("Sebelumnya", "rcq pre", position="footer")
+            buttons.data_button("Berikutnya", "rcq nex", position="footer")
         if self.list_status == "rcd":
             if self.item_type == "--dirs-only":
                 buttons.data_button(
-                    "Files", "rcq itype --files-only", position="footer"
+                    "File", "rcq itype --files-only", position="footer"
                 )
             else:
                 buttons.data_button(
-                    "Folders", "rcq itype --dirs-only", position="footer"
+                    "Folder", "rcq itype --dirs-only", position="footer"
                 )
         if self.list_status == "rcu" or len(self.path_list) > 0:
-            buttons.data_button("Choose Current Path", "rcq cur", position="footer")
+            buttons.data_button("Pilih Path Saat Ini", "rcq cur", position="footer")
         if self.list_status == "rcd":
             buttons.data_button(
-                f"Select: {'Enabled' if self.select else 'Disabled'}",
+                f"Pilih: {'Aktif' if self.select else 'Nonaktif'}",
                 "rcq select",
                 position="footer",
             )
         if len(self.selected_pathes) > 1:
-            buttons.data_button("Done With Selection", "rcq ds", position="footer")
-            buttons.data_button("Clear Selection", "rcq clear", position="footer")
+            buttons.data_button("Selesai Memilih", "rcq ds", position="footer")
+            buttons.data_button("Hapus Pilihan", "rcq clear", position="footer")
         if self.list_status == "rcu":
-            buttons.data_button("Set as Default Path", "rcq def", position="footer")
+            buttons.data_button("Jadikan Path Default", "rcq def", position="footer")
         if self.path or len(self._sections) > 1 or self._rc_user and self._rc_owner:
-            buttons.data_button("Back", "rcq back pa", position="footer")
+            buttons.data_button("Kembali", "rcq back pa", position="footer")
         if self.path:
-            buttons.data_button("Back To Root", "rcq root", position="footer")
-        buttons.data_button("Cancel", "rcq cancel", position="footer")
+            buttons.data_button("Kembali Ke Root", "rcq root", position="footer")
+        buttons.data_button("Batal", "rcq cancel", position="footer")
         button = buttons.build_menu(f_cols=2)
-        msg = "Choose Path:" + (
-            "\nTransfer Type: <i>Download</i>"
+        msg = "Pilih Path:" + (
+            "\nTipe Transfer: <i>Unduh</i>"
             if self.list_status == "rcd"
-            else "\nTransfer Type: <i>Upload</i>"
+            else "\nTipe Transfer: <i>Unggah</i>"
         )
         if self.list_status == "rcu":
             default_path = Config.RCLONE_PATH
-            msg += f"\nDefault Rclone Path: {default_path}" if default_path else ""
-        msg += f"\n\nItems: {items_no}"
+            msg += f"\nPath Rclone Default: {default_path}" if default_path else ""
+        msg += f"\n\nItem: {items_no}"
         if items_no > LIST_LIMIT:
-            msg += f" | Page: {int(page)}/{pages} | Page Step: {self.page_step}"
-        msg += f"\n\nItem Type: {self.item_type}\nConfig Path: {self.config_path}"
-        msg += f"\nCurrent Path: <code>{self.remote}{self.path}</code>"
-        msg += f"\nTimeout: {get_readable_time(self._timeout - (time() - self._time))}"
+            msg += f" | Halaman: {int(page)}/{pages} | Langkah: {self.page_step}"
+        msg += f"\n\nTipe Item: {self.item_type}\nPath Config: {self.config_path}"
+        msg += f"\nPath Saat Ini: <code>{self.remote}{self.path}</code>"
+        msg += f"\nWaktu Habis: {get_readable_time(self._timeout - (time() - self._time))}"
         await self._send_list_message(msg, button)
 
     async def get_path(self, itype=""):
@@ -309,38 +309,38 @@ class RcloneList:
             self.remote = f"{self._sections[0]}:"
             await self.get_path()
         else:
-            msg = "Choose Rclone remote:" + (
-                "\nTransfer Type: <i>Download</i>"
+            msg = "Pilih Remote Rclone:" + (
+                "\nTipe Transfer: <i>Unduh</i>"
                 if self.list_status == "rcd"
-                else "\nTransfer Type: <i>Upload</i>"
+                else "\nTipe Transfer: <i>Unggah</i>"
             )
-            msg += f"\nConfig Path: {self.config_path}"
+            msg += f"\nPath Config: {self.config_path}"
             msg += (
-                f"\nTimeout: {get_readable_time(self._timeout - (time() - self._time))}"
+                f"\nWaktu Habis: {get_readable_time(self._timeout - (time() - self._time))}"
             )
             buttons = ButtonMaker()
             for remote in self._sections:
                 buttons.data_button(remote, f"rcq re {remote}:")
             if self._rc_user and self._rc_owner:
-                buttons.data_button("Back", "rcq back re", position="footer")
-            buttons.data_button("Cancel", "rcq cancel", position="footer")
+                buttons.data_button("Kembali", "rcq back re", position="footer")
+            buttons.data_button("Batal", "rcq cancel", position="footer")
             button = buttons.build_menu(2)
             await self._send_list_message(msg, button)
 
     async def list_config(self):
         if self._rc_user and self._rc_owner:
-            msg = "Choose Rclone config:" + (
-                "\nTransfer Type: Download"
+            msg = "Pilih Config Rclone:" + (
+                "\nTipe Transfer: Unduh"
                 if self.list_status == "rcd"
-                else "\nTransfer Type: Upload"
+                else "\nTipe Transfer: Unggah"
             )
             msg += (
-                f"\nTimeout: {get_readable_time(self._timeout - (time() - self._time))}"
+                f"\nWaktu Habis: {get_readable_time(self._timeout - (time() - self._time))}"
             )
             buttons = ButtonMaker()
-            buttons.data_button("Owner Config", "rcq owner")
-            buttons.data_button("My Config", "rcq user")
-            buttons.data_button("Cancel", "rcq cancel")
+            buttons.data_button("Config Owner", "rcq owner")
+            buttons.data_button("Config Saya", "rcq user")
+            buttons.data_button("Batal", "rcq cancel")
             button = buttons.build_menu(2)
             await self._send_list_message(msg, button)
         else:
@@ -365,7 +365,7 @@ class RcloneList:
             )
             if not self._rc_owner and not self._rc_user:
                 self.event.set()
-                return "Rclone Config not Exists!"
+                return "Config Rclone Tidak Ditemukan!"
             await self.list_config()
         else:
             self.config_path = config_path
