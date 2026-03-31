@@ -28,30 +28,30 @@ from ..helper.telegram_helper.message_utils import (
 @new_task
 async def restart_bot(_, message):
     buttons = button_build.ButtonMaker()
-    buttons.data_button("Yes!", "botrestart confirm")
-    buttons.data_button("No!", "botrestart cancel")
+    buttons.data_button("Ya!", "botrestart confirm")
+    buttons.data_button("Tidak!", "botrestart cancel")
     button = buttons.build_menu(2)
     await send_message(
-        message, "<i>Are you really sure you want to restart the bot ?</i>", button
+        message, "<i>Apakah kamu benar-benar yakin ingin memulai ulang bot?</i>", button
     )
 
 
 @new_task
 async def restart_sessions(_, message):
     buttons = button_build.ButtonMaker()
-    buttons.data_button("Yes!", "sessionrestart confirm")
-    buttons.data_button("No!", "sessionrestart cancel")
+    buttons.data_button("Ya!", "sessionrestart confirm")
+    buttons.data_button("Tidak!", "sessionrestart cancel")
     button = buttons.build_menu(2)
     await send_message(
         message,
-        "<i>Are you really sure you want to restart the session(s) ?!</>",
+        "<i>Apakah kamu benar-benar yakin ingin memulai ulang sesi?</i>",
         button,
     )
 
 
 async def send_incomplete_task_message(cid, msg_id, msg):
     try:
-        if msg.startswith("⌬ <b><i>Restarted Successfully!</i></b>"):
+        if msg.startswith("⌬ <b><i>Berhasil Dimulai Ulang!</i></b>"):
             await TgClient.bot.edit_message_text(
                 chat_id=cid,
                 message_id=msg_id,
@@ -82,11 +82,11 @@ async def restart_notification():
     if Config.INCOMPLETE_TASK_NOTIFIER and Config.DATABASE_URL:
         if notifier_dict := await database.get_incomplete_tasks():
             for cid, data in notifier_dict.items():
-                msg = f"""⌬ <b><i>{"Restarted Successfully!" if cid == chat_id else "Bot Restarted!"}</i></b>
-┟ <b>Date:</b> {now.strftime("%d/%m/%y")}
-┠ <b>Time:</b> {now.strftime("%I:%M:%S %p")}
-┠ <b>TimeZone:</b> Asia/Makassar
-┖ <b>Version:</b> {get_version()}"""
+                msg = f"""⌬ <b><i>{"Berhasil Dimulai Ulang!" if cid == chat_id else "Bot Dimulai Ulang!"}</i></b>
+┟ <b>Tanggal:</b> {now.strftime("%d/%m/%y")}
+┠ <b>Waktu:</b> {now.strftime("%I:%M:%S %p")}
+┠ <b>Zona Waktu:</b> Asia/Makassar
+┖ <b>Versi:</b> {get_version()}"""
                 for tag, links in data.items():
                     msg += f"\n\n{tag}: "
                     for index, link in enumerate(links, start=1):
@@ -102,11 +102,11 @@ async def restart_notification():
             await TgClient.bot.edit_message_text(
                 chat_id=chat_id,
                 message_id=msg_id,
-                text=f"""⌬ <b><i>Restarted Successfully!</i></b>
-┟ <b>Date:</b> {now.strftime("%d/%m/%y")}
-┠ <b>Time:</b> {now.strftime("%I:%M:%S %p")}
-┠ <b>TimeZone:</b> Asia/Makassar
-┖ <b>Version:</b> {get_version()}""",
+                text=f"""⌬ <b><i>Berhasil Dimulai Ulang!</i></b>
+┟ <b>Tanggal:</b> {now.strftime("%d/%m/%y")}
+┠ <b>Waktu:</b> {now.strftime("%I:%M:%S %p")}
+┠ <b>Zona Waktu:</b> Asia/Makassar
+┖ <b>Versi:</b> {get_version()}""",
             )
         except Exception as e:
             LOGGER.error(e)
@@ -122,7 +122,7 @@ async def confirm_restart(_, query):
     await delete_message(message)
     if data[1] == "confirm":
         intervals["stopAll"] = True
-        restart_message = await send_message(reply_to, "<i>Restarting...</i>")
+        restart_message = await send_message(reply_to, "<i>Sedang Memulai Ulang...</i>")
         await delete_message(message)
         await TgClient.stop()
         if scheduler.running:
