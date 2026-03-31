@@ -48,9 +48,9 @@ def _build_command_usage(help_dict, command_key):
     for i in range(1, len(cmd_pages) + 1):
         for name in cmd_pages[i]:
             buttons.data_button(name, f"help {command_key} {name}")
-        buttons.data_button("Prev", f"help pre {command_key} {i - 1}")
-        buttons.data_button("Next", f"help nex {command_key} {i + 1}")
-        buttons.data_button("Close", "help close", "footer")
+        buttons.data_button("Kembali", f"help pre {command_key} {i - 1}")
+        buttons.data_button("Lanjut", f"help nex {command_key} {i + 1}")
+        buttons.data_button("Tutup", "help close", "footer")
         temp_store.append(buttons.build_menu(2))
     COMMAND_USAGE[command_key] = [help_dict["main"], *temp_store]
     buttons.reset()
@@ -70,7 +70,7 @@ def _build_command_usage(help_dict, command_key):
                 buttons.data_button("⫷", f"help pre {command_key} {i - 1}")
             if i < len(cmd_pages) - 1:
                 buttons.data_button("⫸", f"help nex {command_key} {i + 1}")
-        buttons.data_button("Close", "help close", "footer")
+        buttons.data_button("Tutup", "help close", "footer")
         temp_store.append(buttons.build_menu(2))
         buttons.reset()
 
@@ -86,12 +86,12 @@ def create_help_buttons():
 def compare_versions(v1, v2):
     v1, v2 = (list(map(int, v.split("-")[0][1:].split("."))) for v in (v1, v2))
     return (
-        "New Version Update is Available! Check Now!"
+        "Pembaruan Versi Baru Tersedia! Cek Sekarang!"
         if v1 < v2
         else (
-            "More Updated! Kindly Contribute in Official"
+            "Versi Lebih Baru! Silakan Berkontribusi di Repositori Resmi"
             if v1 > v2
-            else "Already up to date with latest version"
+            else "Sudah menggunakan versi paling baru"
         )
     )
 
@@ -101,14 +101,14 @@ def bt_selection_buttons(id_):
     pin = "".join([n for n in id_ if n.isdigit()][:4])
     buttons = ButtonMaker()
     if Config.WEB_PINCODE:
-        buttons.url_button("Select Files", f"{Config.BASE_URL}/app/files?gid={id_}")
-        buttons.data_button("Pincode", f"sel pin {gid} {pin}")
+        buttons.url_button("Pilih File", f"{Config.BASE_URL}/app/files?gid={id_}")
+        buttons.data_button("Kode PIN", f"sel pin {gid} {pin}")
     else:
         buttons.url_button(
-            "Select Files", f"{Config.BASE_URL}/app/files?gid={id_}&pin={pin}"
+            "Pilih File", f"{Config.BASE_URL}/app/files?gid={id_}&pin={pin}"
         )
-    buttons.data_button("Done Selecting", f"sel done {gid} {id_}")
-    buttons.data_button("Cancel", f"sel cancel {gid}")
+    buttons.data_button("Selesai Memilih", f"sel done {gid} {id_}")
+    buttons.data_button("Batal", f"sel cancel {gid}")
     return buttons.build_menu(2)
 
 
@@ -116,7 +116,7 @@ async def get_telegraph_list(telegraph_content):
     path = [
         (
             await telegraph.create_page(
-                title="Mirror-Leech-Bot Drive Search", content=content
+                title="Pencarian Drive Mirror-Leech-Bot", content=content
             )
         )["path"]
         for content in telegraph_content
@@ -124,7 +124,7 @@ async def get_telegraph_list(telegraph_content):
     if len(path) > 1:
         await telegraph.edit_telegraph(path, telegraph_content)
     buttons = ButtonMaker()
-    buttons.url_button("🔎 VIEW", f"https://telegra.ph/{path[0]}")
+    buttons.url_button("🔎 LIHAT", f"https://telegra.ph/{path[0]}")
     return buttons.build_menu(1)
 
 
@@ -264,11 +264,11 @@ async def cmd_exec(cmd, shell=False):
     try:
         stdout = stdout.decode().strip()
     except Exception:
-        stdout = "Unable to decode the response!"
+        stdout = "Tidak dapat memecahkan (decode) respons!"
     try:
         stderr = stderr.decode().strip()
     except Exception:
-        stderr = "Unable to decode the error!"
+        stderr = "Tidak dapat memecahkan (decode) pesan error!"
     return stdout, stderr, proc.returncode
 
 
