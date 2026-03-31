@@ -578,6 +578,10 @@ class TaskListener(TaskConfig):
 
         await start_from_queued()
 
+    async def cancel_task(self):
+        self.is_cancelled = True
+        await self.on_download_error("Dibatalkan oleh pengguna!")
+
     async def on_download_error(self, error, button=None, is_limit=False):
         async with task_dict_lock:
             if self.mid in task_dict:
