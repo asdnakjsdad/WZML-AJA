@@ -31,7 +31,7 @@ async def id_updates(_, query, obj):
     message = query.message
     data = query.data.split()
     if data[1] == "cancel":
-        obj.id = "Task has been cancelled!"
+        obj.id = "Tugas telah dibatalkan!"
         obj.listener.is_cancelled = True
         obj.event.set()
         await delete_message(message)
@@ -146,7 +146,7 @@ class GoogleDriveList(GoogleDriveHelper):
         try:
             await wait_for(self.event.wait(), timeout=self._timeout)
         except Exception:
-            self.id = "Timed Out. Task has been cancelled!"
+            self.id = "Waktu Habis. Tugas telah dibatalkan!"
             self.listener.is_cancelled = True
             self.event.set()
         finally:
@@ -182,43 +182,43 @@ class GoogleDriveList(GoogleDriveHelper):
         if items_no > LIST_LIMIT:
             for i in [1, 2, 4, 6, 10, 30, 50, 100]:
                 buttons.data_button(i, f"gdq ps {i}", position="header")
-            buttons.data_button("Previous", "gdq pre", position="footer")
-            buttons.data_button("Next", "gdq nex", position="footer")
+            buttons.data_button("Sebelumnya", "gdq pre", position="footer")
+            buttons.data_button("Berikutnya", "gdq nex", position="footer")
         if self.list_status == "gdd":
             if self.item_type == "folders":
-                buttons.data_button("Files", "gdq itype files", position="footer")
+                buttons.data_button("File", "gdq itype files", position="footer")
             else:
-                buttons.data_button("Folders", "gdq itype folders", position="footer")
+                buttons.data_button("Folder", "gdq itype folders", position="footer")
         if self.list_status == "gdu" or len(self.items_list) > 0:
-            buttons.data_button("Choose Current Path", "gdq cur", position="footer")
+            buttons.data_button("Pilih Path Saat Ini", "gdq cur", position="footer")
         if self.list_status == "gdu":
-            buttons.data_button("Set as Default Path", "gdq def", position="footer")
+            buttons.data_button("Jadikan Path Default", "gdq def", position="footer")
         if (
             len(self.parents) > 1
             and len(self.drives) > 1
             or self._token_user
             and self._token_owner
         ):
-            buttons.data_button("Back", "gdq back pa", position="footer")
+            buttons.data_button("Kembali", "gdq back pa", position="footer")
         if len(self.parents) > 1:
-            buttons.data_button("Back To Root", "gdq root", position="footer")
-        buttons.data_button("Cancel", "gdq cancel", position="footer")
+            buttons.data_button("Kembali ke Root", "gdq root", position="footer")
+        buttons.data_button("Batal", "gdq cancel", position="footer")
         button = buttons.build_menu(f_cols=2)
-        msg = "Choose Path:" + (
-            "\nTransfer Type: <i>Download</i>"
+        msg = "Pilih Path:" + (
+            "\nTipe Transfer: <i>Unduh</i>"
             if self.list_status == "gdd"
-            else "\nTransfer Type: <i>Upload</i>"
+            else "\nTipe Transfer: <i>Unggah</i>"
         )
         if self.list_status == "gdu":
             default_id = self.listener.user_dict.get("GDRIVE_ID") or Config.GDRIVE_ID
-            msg += f"\nDefault Gdrive ID: {default_id}" if default_id else ""
-        msg += f"\n\nItems: {items_no}"
+            msg += f"\nID Gdrive Default: {default_id}" if default_id else ""
+        msg += f"\n\nItem: {items_no}"
         if items_no > LIST_LIMIT:
-            msg += f" | Page: {int(page)}/{pages} | Page Step: {self.page_step}"
-        msg += f"\n\nItem Type: {self.item_type}\nToken Path: {self.token_path}"
-        msg += f"\n\nCurrent ID: <code>{self.id}</code>"
-        msg += f"\nCurrent Path: <code>{('/').join(i['name'] for i in self.parents)}</code>"
-        msg += f"\nTimeout: {get_readable_time(self._timeout - (time() - self._time))}"
+            msg += f" | Halaman: {int(page)}/{pages} | Langkah: {self.page_step}"
+        msg += f"\n\nTipe Item: {self.item_type}\nPath Token: {self.token_path}"
+        msg += f"\n\nID Saat Ini: <code>{self.id}</code>"
+        msg += f"\nPath Saat Ini: <code>{('/').join(i['name'] for i in self.parents)}</code>"
+        msg += f"\nWaktu Habis: {get_readable_time(self._timeout - (time() - self._time))}"
         await self._send_list_message(msg, button)
 
     async def get_items(self, itype=""):
@@ -232,7 +232,7 @@ class GoogleDriveList(GoogleDriveHelper):
                 return
         except Exception as err:
             if isinstance(err, RetryError):
-                LOGGER.info(f"Total Attempts: {err.last_attempt.attempt_number}")
+                LOGGER.info(f"Total Percobaan: {err.last_attempt.attempt_number}")
                 err = err.last_attempt.exception()
             self.id = str(err).replace(">", "").replace("<", "")
             self.event.set()
@@ -261,11 +261,11 @@ class GoogleDriveList(GoogleDriveHelper):
             self.id = "root"
             await self.get_items()
         elif len(drives) == 0:
-            msg = "Service accounts Doesn't have access to any drive!"
+            msg = "Service accounts tidak memiliki akses ke drive manapun!"
             buttons = ButtonMaker()
             if self._token_user and self._token_owner:
-                buttons.data_button("Back", "gdq back dr", position="footer")
-            buttons.data_button("Cancel", "gdq cancel", position="footer")
+                buttons.data_button("Kembali", "gdq back dr", position="footer")
+            buttons.data_button("Batal", "gdq cancel", position="footer")
             button = buttons.build_menu(2)
             await self._send_list_message(msg, button)
         elif self.use_sa and len(drives) == 1:
@@ -274,14 +274,14 @@ class GoogleDriveList(GoogleDriveHelper):
             self.parents = [{"id": self.id, "name": drives[0]["name"]}]
             await self.get_items()
         else:
-            msg = "Choose Drive:" + (
-                "\nTransfer Type: <i>Download</i>"
+            msg = "Pilih Drive:" + (
+                "\nTipe Transfer: <i>Unduh</i>"
                 if self.list_status == "gdd"
-                else "\nTransfer Type: <i>Upload</i>"
+                else "\nTipe Transfer: <i>Unggah</i>"
             )
-            msg += f"\nToken Path: {self.token_path}"
+            msg += f"\nPath Token: {self.token_path}"
             msg += (
-                f"\nTimeout: {get_readable_time(self._timeout - (time() - self._time))}"
+                f"\nWaktu Habis: {get_readable_time(self._timeout - (time() - self._time))}"
             )
             buttons = ButtonMaker()
             self.drives.clear()
@@ -293,8 +293,8 @@ class GoogleDriveList(GoogleDriveHelper):
                 self.drives.append({"id": item["id"], "name": item["name"]})
                 buttons.data_button(item["name"], f"gdq dr {index}")
             if self._token_user and self._token_owner:
-                buttons.data_button("Back", "gdq back dr", position="footer")
-            buttons.data_button("Cancel", "gdq cancel", position="footer")
+                buttons.data_button("Kembali", "gdq back dr", position="footer")
+            buttons.data_button("Batal", "gdq cancel", position="footer")
             button = buttons.build_menu(2)
             await self._send_list_message(msg, button)
 
@@ -307,22 +307,22 @@ class GoogleDriveList(GoogleDriveHelper):
             or self._sa_owner
             and self._token_user
         ):
-            msg = "Choose Token:" + (
-                "\nTransfer Type: Download"
+            msg = "Pilih Token:" + (
+                "\nTipe Transfer: Unduh"
                 if self.list_status == "gdd"
-                else "\nTransfer Type: Upload"
+                else "\nTipe Transfer: Unggah"
             )
             msg += (
-                f"\nTimeout: {get_readable_time(self._timeout - (time() - self._time))}"
+                f"\nWaktu Habis: {get_readable_time(self._timeout - (time() - self._time))}"
             )
             buttons = ButtonMaker()
             if self._token_owner:
-                buttons.data_button("Owner Token", "gdq owner")
+                buttons.data_button("Token Owner", "gdq owner")
             if self._sa_owner:
                 buttons.data_button("Service Accounts", "gdq sa")
             if self._token_user:
-                buttons.data_button("My Token", "gdq user")
-            buttons.data_button("Cancel", "gdq cancel")
+                buttons.data_button("Token Saya", "gdq user")
+            buttons.data_button("Batal", "gdq cancel")
             button = buttons.build_menu(2)
             await self._send_list_message(msg, button)
         else:
@@ -358,7 +358,7 @@ class GoogleDriveList(GoogleDriveHelper):
             )
             if not self._token_owner and not self._token_user and not self._sa_owner:
                 self.event.set()
-                return "token.pickle or service accounts are not Exists!"
+                return "token.pickle atau service accounts tidak ada!"
             await self.choose_token()
         else:
             self.token_path = token_path
