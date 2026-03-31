@@ -12,26 +12,26 @@ from ..helper.telegram_helper.message_utils import send_message, edit_message
 async def list_buttons(user_id, is_recursive=True, user_token=False):
     buttons = ButtonMaker()
     buttons.data_button(
-        f"{'✅️' if user_token else '❌️'} User Token",
+        f"{'✅️' if user_token else '❌️'} Token Pengguna",
         f"list_types {user_id} ut {is_recursive} {user_token}",
         "header",
     )
     buttons.data_button(
-        f"{'✅️' if is_recursive else '❌️'} Recursive",
+        f"{'✅️' if is_recursive else '❌️'} Rekursif",
         f"list_types {user_id} rec {is_recursive} {user_token}",
         "header",
     )
     buttons.data_button(
-        "Folders", f"list_types {user_id} folders {is_recursive} {user_token}"
+        "Folder", f"list_types {user_id} folders {is_recursive} {user_token}"
     )
     buttons.data_button(
-        "Files", f"list_types {user_id} files {is_recursive} {user_token}"
+        "File", f"list_types {user_id} files {is_recursive} {user_token}"
     )
     buttons.data_button(
-        "Both", f"list_types {user_id} both {is_recursive} {user_token}"
+        "Keduanya", f"list_types {user_id} both {is_recursive} {user_token}"
     )
 
-    buttons.data_button("Cancel", f"list_types {user_id} cancel", "footer")
+    buttons.data_button("Batal", f"list_types {user_id} cancel", "footer")
     return buttons.build_menu(2)
 
 
@@ -55,10 +55,10 @@ async def _list_drive(key, message, item_type, is_recursive, user_token, user_id
         except Exception as e:
             await edit_message(message, e)
             return
-        msg = f"<b>Found {contents_no} result for <i>{key}</i></b>"
+        msg = f"<b>Ditemukan {contents_no} hasil untuk <i>{key}</i></b>"
         await edit_message(message, msg, button)
     else:
-        await edit_message(message, f"No result found for <i>{key}</i>")
+        await edit_message(message, f"Tidak ada hasil ditemukan untuk <i>{key}</i>")
 
 
 @new_task
@@ -68,25 +68,25 @@ async def select_type(_, query):
     key = message.reply_to_message.text.split(maxsplit=1)[1].strip()
     data = query.data.split()
     if user_id != int(data[1]):
-        return await query.answer(text="Not Yours!", show_alert=True)
+        return await query.answer(text="Bukan Milikmu!", show_alert=True)
     elif data[2] == "rec":
         await query.answer()
         is_recursive = not bool(eval(data[3]))
         buttons = await list_buttons(user_id, is_recursive, eval(data[4]))
-        return await edit_message(message, "Choose list options:", buttons)
+        return await edit_message(message, "Pilih opsi pencarian:", buttons)
     elif data[2] == "ut":
         await query.answer()
         user_token = not bool(eval(data[4]))
         buttons = await list_buttons(user_id, eval(data[3]), user_token)
-        return await edit_message(message, "Choose list options:", buttons)
+        return await edit_message(message, "Pilih opsi pencarian:", buttons)
     elif data[2] == "cancel":
         await query.answer()
-        return await edit_message(message, "<i>List has been canceled!</i>")
+        return await edit_message(message, "<i>Pencarian telah dibatalkan!</i>")
     await query.answer()
     item_type = data[2]
     is_recursive = eval(data[3])
     user_token = eval(data[4])
-    await edit_message(message, f"<b>Searching.. for <i>{key}</i></b>")
+    await edit_message(message, f"<b>Mencari.. <i>{key}</i></b>")
     await _list_drive(key, message, item_type, is_recursive, user_token, user_id)
 
 
@@ -94,8 +94,8 @@ async def select_type(_, query):
 async def gdrive_search(_, message):
     if len(message.text.split()) == 1:
         return await send_message(
-            message, "<i>Send a search query along with list command</i>"
+            message, "<i>Kirimkan kata kunci pencarian beserta perintahnya</i>"
         )
     user_id = message.from_user.id
     buttons = await list_buttons(user_id)
-    await send_message(message, "Choose list options:", buttons)
+    await send_message(message, "Pilih opsi pencarian:", buttons)
