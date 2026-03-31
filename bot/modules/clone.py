@@ -1,4 +1,4 @@
-from asyncio import gather
+from asyncio import sleep, gather
 from json import loads
 from secrets import token_hex
 
@@ -164,11 +164,11 @@ class Clone(TaskListener):
             if limit_exceeded := await limit_checker(self):
                 await send_message(
                     self.message,
-                    f"""〶 <b><i><u>Limit Breached:</u></i></b>
+                    f"""〶 <b><i><u>Batas Terlampaui:</u></i></b>
 │
-┟ <b>Task Size</b> → {get_readable_file_size(self.size)}
-┠ <b>In Mode</b> → {self.mode[0]}
-┠ <b>Out Mode</b> → {self.mode[1]}
+┟ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}
+┠ <b>Mode Masuk</b> → {self.mode[0]}
+┠ <b>Mode Keluar</b> → {self.mode[1]}
 {limit_exceeded}""",
                 )
                 return
@@ -177,7 +177,7 @@ class Clone(TaskListener):
             drive = GoogleDriveClone(self)
             if files <= 10:
                 msg = await send_message(
-                    self.message, f"Cloning: <code>{self.link}</code>"
+                    self.message, f"Menggandakan: <code>{self.link}</code>"
                 )
             else:
                 msg = ""
@@ -225,7 +225,7 @@ class Clone(TaskListener):
                 res = await cmd_exec(cmd)
                 if res[2] != 0:
                     if res[2] != -9:
-                        msg = f"Error: While getting rclone stat. Path: {remote}:{src_path}. Stderr: {res[1][:4000]}"
+                        msg = f"Error: Saat mengambil statistik rclone. Path: {remote}:{src_path}. Stderr: {res[1][:4000]}"
                         await send_message(self.message, msg)
                     return
                 rstat = loads(res[0])
@@ -306,7 +306,7 @@ class Clone(TaskListener):
                 folders = None
                 self.size = 0
                 error = res1[1] or res2[1] or res3[1]
-                msg = f"Error: While getting rclone stat. Path: {destination}. Stderr: {error[:4000]}"
+                msg = f"Error: Saat mengambil statistik rclone. Path: {destination}. Stderr: {error[:4000]}"
                 await self.on_upload_error(msg)
             else:
                 files = len(res1[0].split("\n"))
