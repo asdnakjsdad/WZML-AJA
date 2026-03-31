@@ -77,21 +77,21 @@ DEFAULT_VALUES = {
 async def get_buttons(key=None, edit_type=None, edit_mode=False):
     buttons = ButtonMaker()
     if key is None:
-        buttons.data_button("Config Variables", "botset var")
-        buttons.data_button("Private Files", "botset private open")
-        buttons.data_button("Qbit Settings", "botset qbit")
-        buttons.data_button("Aria2c Settings", "botset aria")
-        buttons.data_button("Sabnzbd Settings", "botset nzb")
-        buttons.data_button("JDownloader Sync", "botset syncjd")
-        buttons.data_button("Close", "botset close")
-        msg = "Bot Settings:"
+        buttons.data_button("Variabel Config", "botset var")
+        buttons.data_button("File Privat", "botset private open")
+        buttons.data_button("Pengaturan Qbit", "botset qbit")
+        buttons.data_button("Pengaturan Aria2c", "botset aria")
+        buttons.data_button("Pengaturan Sabnzbd", "botset nzb")
+        buttons.data_button("Sinkronisasi JDownloader", "botset syncjd")
+        buttons.data_button("Tutup", "botset close")
+        msg = "Pengaturan Bot:"
     elif edit_type is not None:
         if edit_type == "botvar":
             msg = ""
-            buttons.data_button("Back", "botset var")
+            buttons.data_button("Kembali", "botset var")
             if key not in ["TELEGRAM_HASH", "TELEGRAM_API", "OWNER_ID", "BOT_TOKEN"]:
                 buttons.data_button("Default", f"botset resetvar {key}")
-            buttons.data_button("Close", "botset close")
+            buttons.data_button("Tutup", "botset close")
             if key in [
                 "CMD_SUFFIX",
                 "OWNER_ID",
@@ -101,39 +101,39 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
                 "BOT_TOKEN",
                 "TG_PROXY",
             ]:
-                msg += "Restart required for this edit to take effect! You will not see the changes in bot vars, the edit will be in database only!\n\n"
-            msg += f"Send a valid value for {key}. Current value is '{Config.get(key)}'. Timeout: 60 sec"
+                msg += "Mulai ulang diperlukan agar pengeditan ini diterapkan! Anda tidak akan melihat perubahan di variabel bot, pengeditan hanya akan ada di database!\n\n"
+            msg += f"Kirim nilai yang valid untuk {key}. Nilai saat ini adalah '{Config.get(key)}'. Waktu Habis: 60 dtk"
         elif edit_type == "ariavar":
-            buttons.data_button("Back", "botset aria")
+            buttons.data_button("Kembali", "botset aria")
             if key != "newkey":
-                buttons.data_button("Empty String", f"botset emptyaria {key}")
-            buttons.data_button("Close", "botset close")
+                buttons.data_button("String Kosong", f"botset emptyaria {key}")
+            buttons.data_button("Tutup", "botset close")
             msg = (
-                "Send a key with value. Example: https-proxy-user:value. Timeout: 60 sec"
+                "Kirim kunci dengan nilai. Contoh: https-proxy-user:nilai. Waktu Habis: 60 dtk"
                 if key == "newkey"
-                else f"Send a valid value for {key}. Current value is '{aria2_options[key]}'. Timeout: 60 sec"
+                else f"Kirim nilai yang valid untuk {key}. Nilai saat ini adalah '{aria2_options[key]}'. Waktu Habis: 60 dtk"
             )
         elif edit_type == "qbitvar":
-            buttons.data_button("Back", "botset qbit")
-            buttons.data_button("Empty String", f"botset emptyqbit {key}")
-            buttons.data_button("Close", "botset close")
-            msg = f"Send a valid value for {key}. Current value is '{qbit_options[key]}'. Timeout: 60 sec"
+            buttons.data_button("Kembali", "botset qbit")
+            buttons.data_button("String Kosong", f"botset emptyqbit {key}")
+            buttons.data_button("Tutup", "botset close")
+            msg = f"Kirim nilai yang valid untuk {key}. Nilai saat ini adalah '{qbit_options[key]}'. Waktu Habis: 60 dtk"
         elif edit_type == "nzbvar":
-            buttons.data_button("Back", "botset nzb")
+            buttons.data_button("Kembali", "botset nzb")
             buttons.data_button("Default", f"botset resetnzb {key}")
-            buttons.data_button("Empty String", f"botset emptynzb {key}")
-            buttons.data_button("Close", "botset close")
-            msg = f"Send a valid value for {key}. Current value is '{nzb_options[key]}'.\nIf the value is list then seperate them by space or ,\nExample: .exe,info or .exe .info\nTimeout: 60 sec"
+            buttons.data_button("String Kosong", f"botset emptynzb {key}")
+            buttons.data_button("Tutup", "botset close")
+            msg = f"Kirim nilai yang valid untuk {key}. Nilai saat ini adalah '{nzb_options[key]}'.\nJika nilai berupa daftar, pisahkan dengan spasi atau ,\nContoh: .exe,info atau .exe .info\nWaktu Habis: 60 dtk"
         elif edit_type.startswith("nzbsevar"):
             index = 0 if key == "newser" else int(edit_type.replace("nzbsevar", ""))
-            buttons.data_button("Back", f"botset nzbser{index}")
+            buttons.data_button("Kembali", f"botset nzbser{index}")
             if key != "newser":
-                buttons.data_button("Empty", f"botset emptyserkey {index} {key}")
-            buttons.data_button("Close", "botset close")
+                buttons.data_button("Kosong", f"botset emptyserkey {index} {key}")
+            buttons.data_button("Tutup", "botset close")
             if key == "newser":
-                msg = "Send one server as dictionary {}, like in config.py without []. Timeout: 60 sec"
+                msg = "Kirim satu server sebagai dictionary {}, seperti di config.py tanpa []. Waktu Habis: 60 dtk"
             else:
-                msg = f"Send a valid value for {key} in server {Config.USENET_SERVERS[index]['name']}. Current value is {Config.USENET_SERVERS[index][key]}. Timeout: 60 sec"
+                msg = f"Kirim nilai yang valid untuk {key} di server {Config.USENET_SERVERS[index]['name']}. Nilai saat ini adalah {Config.USENET_SERVERS[index][key]}. Waktu Habis: 60 dtk"
     elif key == "var":
         conf_dict = Config.get_all()
         for k in list(conf_dict.keys())[start : 10 + start]:
@@ -143,25 +143,25 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
         if state == "view":
             buttons.data_button("Edit", "botset edit var")
         else:
-            buttons.data_button("View", "botset view var")
-        buttons.data_button("Back", "botset back")
-        buttons.data_button("Close", "botset close")
+            buttons.data_button("Lihat", "botset view var")
+        buttons.data_button("Kembali", "botset back")
+        buttons.data_button("Tutup", "botset close")
         for x in range(0, len(conf_dict), 10):
             buttons.data_button(
                 f"{int(x / 10)}", f"botset start var {x}", position="footer"
             )
-        msg = f"Config Variables | Page: {int(start / 10)} | State: {state}"
+        msg = f"Variabel Config | Halaman: {int(start / 10)} | Status: {state}"
     elif key == "private":
         if edit_mode:
-            buttons.data_button("Stop Invoke File", "botset private stop", "header")
+            buttons.data_button("Hentikan Invoke File", "botset private stop", "header")
         else:
-            buttons.data_button("Create New File", "botset private new")
-            buttons.data_button("Add/Delete File", "botset private edit")
-        buttons.data_button("Back", "botset back", position="footer")
-        buttons.data_button("Close", "botset close", position="footer")
+            buttons.data_button("Buat File Baru", "botset private new")
+            buttons.data_button("Tambah/Hapus File", "botset private edit")
+        buttons.data_button("Kembali", "botset back", position="footer")
+        buttons.data_button("Tutup", "botset close", position="footer")
         txt = "\n┠ ".join(
             [
-                f"<code>{fn}</code> → <b>{'Exists' if await aiopath.isfile(fn) else 'Not Exists'}</b>"
+                f"<code>{fn}</code> → <b>{'Ada' if await aiopath.isfile(fn) else 'Tidak Ada'}</b>"
                 for fn in [
                     "config.py",
                     "token.pickle",
@@ -174,16 +174,16 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
                 ]
             ]
         )
-        msg = f"""⌬ <b>Private File Settings</b>
+        msg = f"""⌬ <b>Pengaturan File Privat</b>
 ┠ <b>Dashboard :</b> 
 ┃
 ┠ {txt}
 ┃
-┠ <b>Delete File</b> → Send the file name as text message, Like <code>rclone.conf</code>.
+┠ <b>Hapus File</b> → Kirim nama file sebagai pesan teks, Contoh: <code>rclone.conf</code>.
 ┃
-┖ <b>Note:</b> Changing .netrc will not take effect for aria2c until restart."""
+┖ <b>Catatan:</b> Mengubah .netrc tidak akan berlaku untuk aria2c hingga bot dimulai ulang."""
         if edit_mode:
-            msg += "\n\n<i>Send the file name to delete the file, file to save the file & for new file create, follow below format.</i> \n\n<b>Format:</b> \nfile_name\n\ncontents of file</i>\n\n<b>Time Left :</b> <code>60 sec</code>"
+            msg += "\n\n<i>Kirim nama file untuk menghapus file, kirim file untuk menyimpannya & untuk membuat file baru, ikuti format di bawah ini.</i> \n\n<b>Format:</b> \nnama_file\n\nisi dari file tersebut</i>\n\n<b>Sisa Waktu :</b> <code>60 dtk</code>"
     elif key == "aria":
         for k in list(aria2_options.keys())[start : 10 + start]:
             if k not in ["checksum", "index-out", "out", "pause", "select-file"]:
@@ -191,59 +191,59 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
         if state == "view":
             buttons.data_button("Edit", "botset edit aria")
         else:
-            buttons.data_button("View", "botset view aria")
-        buttons.data_button("Add new key", "botset ariavar newkey")
-        buttons.data_button("Back", "botset back")
-        buttons.data_button("Close", "botset close")
+            buttons.data_button("Lihat", "botset view aria")
+        buttons.data_button("Tambah kunci baru", "botset ariavar newkey")
+        buttons.data_button("Kembali", "botset back")
+        buttons.data_button("Tutup", "botset close")
         for x in range(0, len(aria2_options), 10):
             buttons.data_button(
                 f"{int(x / 10)}", f"botset start aria {x}", position="footer"
             )
-        msg = f"Aria2c Options | Page: {int(start / 10)} | State: {state}"
+        msg = f"Opsi Aria2c | Halaman: {int(start / 10)} | Status: {state}"
     elif key == "qbit":
         for k in list(qbit_options.keys())[start : 10 + start]:
             buttons.data_button(k, f"botset qbitvar {k}")
         if state == "view":
             buttons.data_button("Edit", "botset edit qbit")
         else:
-            buttons.data_button("View", "botset view qbit")
-        buttons.data_button("Sync Qbittorrent", "botset syncqbit")
-        buttons.data_button("Back", "botset back")
-        buttons.data_button("Close", "botset close")
+            buttons.data_button("Lihat", "botset view qbit")
+        buttons.data_button("Sinkronisasi Qbittorrent", "botset syncqbit")
+        buttons.data_button("Kembali", "botset back")
+        buttons.data_button("Tutup", "botset close")
         for x in range(0, len(qbit_options), 10):
             buttons.data_button(
                 f"{int(x / 10)}", f"botset start qbit {x}", position="footer"
             )
-        msg = f"Qbittorrent Options | Page: {int(start / 10)} | State: {state}"
+        msg = f"Opsi Qbittorrent | Halaman: {int(start / 10)} | Status: {state}"
     elif key == "nzb":
         for k in list(nzb_options.keys())[start : 10 + start]:
             buttons.data_button(k, f"botset nzbvar {k}")
         if state == "view":
             buttons.data_button("Edit", "botset edit nzb")
         else:
-            buttons.data_button("View", "botset view nzb")
-        buttons.data_button("Servers", "botset nzbserver")
-        buttons.data_button("Sync Sabnzbd", "botset syncnzb")
-        buttons.data_button("Back", "botset back")
-        buttons.data_button("Close", "botset close")
+            buttons.data_button("Lihat", "botset view nzb")
+        buttons.data_button("Server", "botset nzbserver")
+        buttons.data_button("Sinkronisasi Sabnzbd", "botset syncnzb")
+        buttons.data_button("Kembali", "botset back")
+        buttons.data_button("Tutup", "botset close")
         for x in range(0, len(nzb_options), 10):
             buttons.data_button(
                 f"{int(x / 10)}", f"botset start nzb {x}", position="footer"
             )
-        msg = f"Sabnzbd Options | Page: {int(start / 10)} | State: {state}"
+        msg = f"Opsi Sabnzbd | Halaman: {int(start / 10)} | Status: {state}"
     elif key == "nzbserver":
         if len(Config.USENET_SERVERS) > 0:
             for index, k in enumerate(Config.USENET_SERVERS[start : 10 + start]):
                 buttons.data_button(k["name"], f"botset nzbser{index}")
-        buttons.data_button("Add New", "botset nzbsevar newser")
-        buttons.data_button("Back", "botset nzb")
-        buttons.data_button("Close", "botset close")
+        buttons.data_button("Tambah Baru", "botset nzbsevar newser")
+        buttons.data_button("Kembali", "botset nzb")
+        buttons.data_button("Tutup", "botset close")
         if len(Config.USENET_SERVERS) > 10:
             for x in range(0, len(Config.USENET_SERVERS), 10):
                 buttons.data_button(
                     f"{int(x / 10)}", f"botset start nzbser {x}", position="footer"
                 )
-        msg = f"Usenet Servers | Page: {int(start / 10)} | State: {state}"
+        msg = f"Server Usenet | Halaman: {int(start / 10)} | Status: {state}"
     elif key.startswith("nzbser"):
         index = int(key.replace("nzbser", ""))
         LOGGER.info(f"Data: {key}, {index}")
@@ -254,16 +254,16 @@ async def get_buttons(key=None, edit_type=None, edit_mode=False):
         if state == "view":
             buttons.data_button("Edit", f"botset edit {key}")
         else:
-            buttons.data_button("View", f"botset view {key}")
-        buttons.data_button("Remove Server", f"botset remser {index}")
-        buttons.data_button("Back", "botset nzbserver")
-        buttons.data_button("Close", "botset close")
+            buttons.data_button("Lihat", f"botset view {key}")
+        buttons.data_button("Hapus Server", f"botset remser {index}")
+        buttons.data_button("Kembali", "botset nzbserver")
+        buttons.data_button("Tutup", "botset close")
         if len(Config.USENET_SERVERS[index].keys()) > 10:
             for x in range(0, len(Config.USENET_SERVERS[index]), 10):
                 buttons.data_button(
                     f"{int(x / 10)}", f"botset start {key} {x}", position="footer"
                 )
-        msg = f"Server Keys | Page: {int(start / 10)} | State: {state}"
+        msg = f"Kunci Server | Halaman: {int(start / 10)} | Status: {state}"
 
     return msg, buttons.build_menu(1 if key is None else 2)
 
@@ -327,7 +327,7 @@ async def edit_variable(_, message, pre_message, key):
             except ValueError:
                 await send_message(
                     message,
-                    "Invalid value! LINKS_LOG_ID must be a valid integer chat ID.",
+                    "Nilai tidak valid! LINKS_LOG_ID harus berupa ID obrolan integer yang valid.",
                 )
                 return await update_buttons(pre_message, "var")
     elif key == "MIRROR_LOG_ID":
@@ -337,7 +337,7 @@ async def edit_variable(_, message, pre_message, key):
             except ValueError:
                 await send_message(
                     message,
-                    "Invalid value! MIRROR_LOG_ID must be a valid integer chat ID.",
+                    "Nilai tidak valid! MIRROR_LOG_ID harus berupa ID obrolan integer yang valid.",
                 )
                 return await update_buttons(pre_message, "var")
     elif key == "AUTHORIZED_CHATS":
@@ -454,18 +454,18 @@ async def edit_nzb_server(_, message, pre_message, key, index=0):
             try:
                 value = eval(value)
             except Exception:
-                await send_message(message, "Invalid dict format!")
+                await send_message(message, "Format dict tidak valid!")
                 await update_buttons(pre_message, "nzbserver")
                 return
             res = await sabnzbd_client.add_server(value)
             if not res["config"]["servers"][0]["host"]:
-                await send_message(message, "Invalid server!")
+                await send_message(message, "Server tidak valid!")
                 await update_buttons(pre_message, "nzbserver")
                 return
             Config.USENET_SERVERS.append(value)
             await update_buttons(pre_message, "nzbserver")
         else:
-            await send_message(message, "Invalid dict format!")
+            await send_message(message, "Format dict tidak valid!")
             await update_buttons(pre_message, "nzbserver")
             return
     else:
@@ -475,7 +475,7 @@ async def edit_nzb_server(_, message, pre_message, key, index=0):
             {"name": Config.USENET_SERVERS[index]["name"], key: value}
         )
         if res["config"]["servers"][0][key] == "":
-            await send_message(message, "Invalid value")
+            await send_message(message, "Nilai tidak valid")
             return
         Config.USENET_SERVERS[index][key] = value
         await update_buttons(pre_message, f"nzbser{index}")
@@ -551,9 +551,9 @@ async def update_private_file(_, message, pre_message, key, new_file=False):
             await load_config()
         if "@github.com" in Config.UPSTREAM_REPO:
             buttons = ButtonMaker()
-            msg = "Push to UPSTREAM_REPO ?"
-            buttons.data_button("Yes!", f"botset push {file_name}")
-            buttons.data_button("No", "botset close")
+            msg = "Dorong ke UPSTREAM_REPO ?"
+            buttons.data_button("Ya!", f"botset push {file_name}")
+            buttons.data_button("Tidak", "botset close")
             await send_message(message, msg, buttons.build_menu(2))
         else:
             await delete_message(message)
@@ -616,7 +616,7 @@ async def event_handler(client, query, pfunc, rfunc, document=False):
                 msg = await client.get_messages(chat_id, query.message.id)
                 text = msg.text.split("\n")
                 text[-1] = (
-                    f"<b>Time Left :</b> <code>{round(60 - (time() - start_time), 2)} sec</code>"
+                    f"<b>Sisa Waktu :</b> <code>{round(60 - (time() - start_time), 2)} dtk</code>"
                 )
                 await edit_message(msg, "\n".join(text), msg.reply_markup)
     client.remove_handler(*handler)
@@ -638,12 +638,12 @@ async def edit_bot_settings(client, query):
     elif data[1] == "syncjd":
         if not Config.JD_EMAIL or not Config.JD_PASS:
             await query.answer(
-                "No Email or Password provided!",
+                "Tidak ada Email atau Kata Sandi yang diberikan!",
                 show_alert=True,
             )
             return
         await query.answer(
-            "Syncronization Started. JDownloader will get restarted. It takes up to 10 sec!",
+            "Sinkronisasi Dimulai. JDownloader akan dimulai ulang. Butuh waktu hingga 10 detik!",
             show_alert=True,
         )
         await sync_jdownloader()
@@ -732,17 +732,17 @@ async def edit_bot_settings(client, query):
     elif data[1] == "syncnzb":
         if not Config.USENET_SERVERS:
             return await query.answer(
-                "Syncronization Paused. No USENET_SERVERS is provided !"
+                "Sinkronisasi Dijeda. Tidak ada USENET_SERVERS yang diberikan!"
             )
         await query.answer(
-            "Syncronization Started. It takes up to 2 sec!", show_alert=True
+            "Sinkronisasi Dimulai. Butuh waktu hingga 2 detik!", show_alert=True
         )
         nzb_options.clear()
         await update_nzb_options()
         await database.update_nzb_config()
     elif data[1] == "syncqbit":
         await query.answer(
-            "Syncronization Started. It takes up to 2 sec!", show_alert=True
+            "Sinkronisasi Dimulai. Butuh waktu hingga 2 detik!", show_alert=True
         )
         qbit_options.clear()
         await update_qb_options()
