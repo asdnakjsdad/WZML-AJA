@@ -60,7 +60,7 @@ class EngineStatus:
 
 
 STATUSES = {
-    "ALL": "Semua",
+    "Semua": "All",
     "DL": MirrorStatus.STATUS_DOWNLOAD,
     "UP": MirrorStatus.STATUS_UPLOAD,
     "QD": MirrorStatus.STATUS_QUEUEDL,
@@ -89,7 +89,7 @@ async def get_task_by_gid(gid: str):
 
 
 async def get_specific_tasks(status, user_id):
-    if status == "Semua":
+    if status == "All":
         if user_id:
             return [tk for tk in task_dict.values() if tk.listener.user_id == user_id]
         else:
@@ -202,7 +202,7 @@ def get_progress_bar_string(pct):
     return f"[{p_str}]"
 
 
-async def get_readable_message(sid, is_user, page_no=1, status="Semua", page_step=1):
+async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=1):
     msg = ""
     button = None
 
@@ -222,7 +222,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="Semua", page_ste
     for index, task in enumerate(
         tasks[start_position : STATUS_LIMIT + start_position], start=1
     ):
-        if status != "Semua":
+        if status != "All":
             tstatus = status
         elif iscoroutinefunction(task.status):
             tstatus = await task.status()
@@ -295,7 +295,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="Semua", page_ste
         msg += f"\n<b>┖ Henti</b> → <i>/{BotCommands.CancelTaskCommand[1]}_{task.gid()}</i>\n\n"
 
     if len(msg) == 0:
-        if status == "Semua":
+        if status == "All":
             return None, None
         else:
             msg = f"Tidak ada tugas <b>{status}</b> yang sedang aktif saat ini!\n\n"
@@ -311,7 +311,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="Semua", page_ste
         if tasks_no > 30:
             for i in [1, 2, 4, 6, 8, 10, 15]:
                 buttons.data_button(i, f"status {sid} ps {i}", position="footer")
-    if status != "Semua" or tasks_no > 20:
+    if status != "All" or tasks_no > 20:
         for label, status_value in list(STATUSES.items()):
             if status_value != status:
                 buttons.data_button(label, f"status {sid} st {status_value}")
