@@ -318,4 +318,5 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
     buttons.data_button("♻️ Segarkan", f"status {sid} ref", position="header")
     msg += f"\n┟ <b>CPU</b> → {cpu_percent()}% | <b>Sisa</b> → {get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)} [{round(100 - disk_usage(DOWNLOAD_DIR).percent, 1)}%]"
     msg += f"\n┖ <b>RAM</b> → {virtual_memory().percent}% | <b>Aktif</b> → {get_readable_time(time() - bot_start_time)}"
+    button = buttons.build_menu(2)
     return msg, button
