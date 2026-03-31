@@ -236,7 +236,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="Semua", page_ste
 
         user = task.listener.message.from_user
         sender = task.listener.message.sender_chat
-    
+        
         if user:
             name = user.mention(style='html')
             uid = user.id
@@ -245,8 +245,8 @@ async def get_readable_message(sid, is_user, page_no=1, status="Semua", page_ste
             uid = sender.id
         else:
             name = "Sistem"
-            uid = "Unknown"
-    
+            uid = "Tidak Diketahui"
+        
         msg += f"\n\n<b>Tugas Oleh {name} </b> ( #ID{uid} )"
         if task.listener.is_super_chat:
             msg += f" <i>[<a href='{task.listener.message.link}'>Tautan</a>]</i>"
@@ -298,7 +298,7 @@ async def get_readable_message(sid, is_user, page_no=1, status="Semua", page_ste
         if status == "Semua":
             return None, None
         else:
-            msg = f"Tidak Ada Tugas {status} yang Aktif!\n\n"
+            msg = f"Tidak ada tugas <b>{status}</b> yang sedang aktif saat ini!\n\n"
 
     msg += "⌬ <b><u>Statistik Bot</u></b>"
     buttons = ButtonMaker()
