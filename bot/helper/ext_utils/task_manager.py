@@ -34,7 +34,7 @@ async def stop_duplicate_check(listener):
         return False, None
 
     name = listener.name
-    LOGGER.info(f"Checking File/Folder if already in Drive: {name}")
+    LOGGER.info(f"Memeriksa File/Folder apakah sudah ada di Drive: {name}")
 
     if listener.compress:
         name = f"{name}.zip"
@@ -52,7 +52,7 @@ async def stop_duplicate_check(listener):
             listener.user_id,
         )
         if telegraph_content:
-            msg = f"File/Folder is already available in Drive.\nHere are {contents_no} list results:"
+            msg = f"File/Folder sudah tersedia di Drive.\nBerikut adalah {contents_no} hasil pencarian:"
             button = await get_telegraph_list(telegraph_content)
             return msg, button
 
@@ -167,9 +167,9 @@ async def start_from_queued():
 
 
 async def limit_checker(listener, yt_playlist=0):
-    LOGGER.info("Checking Size Limit...")
+    LOGGER.info("Memeriksa Batas Ukuran...")
     if await CustomFilters.sudo("", listener.message):
-        LOGGER.info("SUDO User. Skipping Size Limit...")
+        LOGGER.info("Pengguna SUDO. Melewati Batas Ukuran...")
         return
 
     user_id, size = listener.user_id, listener.size
@@ -181,14 +181,14 @@ async def limit_checker(listener, yt_playlist=0):
             if condition and (limit := getattr(Config, attr, 0)):
                 if attr == "PLAYLIST_LIMIT":
                     if yt_playlist >= limit:
-                        limit_exceeded = f"┠ <b>{name} Limit Count</b> → {limit}"
+                        limit_exceeded = f"┠ <b>Batas Jumlah {name}</b> → {limit}"
                 else:
                     byte_limit = limit * 1024**3
                     if size >= byte_limit:
-                        limit_exceeded = f"┠ <b>{name} Limit</b> → {get_readable_file_size(byte_limit)}"
+                        limit_exceeded = f"┠ <b>Batas {name}</b> → {get_readable_file_size(byte_limit)}"
 
                 LOGGER.info(
-                    f"{name} Limit Breached: {listener.name} & Size: {get_readable_file_size(size)}"
+                    f"{name} Limit Terlampaui: {listener.name} & Ukuran: {get_readable_file_size(size)}"
                 )
                 break
         return limit_exceeded
@@ -220,10 +220,10 @@ async def limit_checker(listener, yt_playlist=0):
             if not await check_storage_threshold(
                 size, limit, any([listener.compress, listener.extract])
             ):
-                limit_exceeded = f"┠ <b>Threshold Storage Limit</b> → {get_readable_file_size(limit)}"
+                limit_exceeded = f"┠ <b>Batas Ambang Penyimpanan</b> → {get_readable_file_size(limit)}"
 
     if limit_exceeded:
-        return limit_exceeded + f"\n┖ <b>Task By</b> → {listener.tag}"
+        return limit_exceeded + f"\n┖ <b>Tugas Oleh</b> → {listener.tag}"
 
 
 """
@@ -244,7 +244,7 @@ async def user_interval_check(user_id):
 
 
 async def pre_task_check(message):
-    LOGGER.info("Running Pre Task Checks ...")
+    LOGGER.info("Menjalankan Pengecekan Pra Tugas ...")
     msg = []
     button = None
     if await CustomFilters.sudo("", message):
@@ -266,18 +266,18 @@ async def pre_task_check(message):
         ut := await user_interval_check(user_id)
     ):
         msg.append(
-            f"┠ <b>Waiting Time</b> → {get_readable_time(ut)}\n┠ <i>User's Time Interval Restrictions</i> → {get_readable_time(uti)}"
+            f"┠ <b>Waktu Tunggu</b> → {get_readable_time(ut)}\n┠ <i>Pembatasan Interval Waktu Pengguna</i> → {get_readable_time(uti)}"
         )
     bmax_tasks = safe_int(user_dict.get("bmax_tasks", Config.BOT_MAX_TASKS))
     if bmax_tasks > 0 and len(await get_specific_tasks("All", False)) >= bmax_tasks:
         msg.append(
-            f"┠ Max Concurrent Bot's Tasks Limit exceeded.\n┠ Bot Tasks Limit : {bmax_tasks} task"
+            f"┠ Batas Maksimal Tugas Bot Bersamaan Terlampaui.\n┠ Batas Tugas Bot : {bmax_tasks} tugas"
         )
 
     maxtask = safe_int(user_dict.get("maxtask", Config.USER_MAX_TASKS))
     if maxtask > 0 and len(await get_specific_tasks("All", user_id)) >= maxtask:
         msg.append(
-            f"┠ Max Concurrent User's Task(s) Limit exceeded! \n┠ User Task Limit : {maxtask} tasks"
+            f"┠ Batas Maksimal Tugas Pengguna Bersamaan Terlampaui! \n┠ Batas Tugas Pengguna : {maxtask} tugas"
         )
 
     token_msg, button = await verify_token(user_id, button)
@@ -286,7 +286,7 @@ async def pre_task_check(message):
 
     if msg:
         username = message.from_user.mention
-        final_msg = f"⌬ <b>Task Checks :</b>\n│\n┟ <b>Name</b> → {username}\n┃\n"
+        final_msg = f"⌬ <b>Pengecekan Tugas :</b>\n│\n┟ <b>Nama</b> → {username}\n┃\n"
         for i, m_part in enumerate(msg, 1):
             final_msg += f"{m_part}\n"
         if button is not None:
