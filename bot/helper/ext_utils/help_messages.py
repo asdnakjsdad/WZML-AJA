@@ -1,291 +1,291 @@
 # ruff: noqa: F403, F405
-mirror = """<b>Send link along with command line or </b>
+mirror = """<b>Kirim tautan bersama dengan baris perintah atau </b>
 
 /cmd link
 
-<b>By replying to link/file</b>:
+<b>Dengan membalas ke tautan/file</b>:
 
-/cmd -n new name -e -up upload destination
+/cmd -n nama_baru -e -up tujuan_unggahan
 
-<b>NOTE:</b>
-1. Commands that start with <b>qb</b> are ONLY for torrents."""
+<b>CATATAN:</b>
+1. Perintah yang dimulai dengan <b>qb</b> HANYA untuk torrent."""
 
-yt = """<b>Send link along with command line</b>:
+yt = """<b>Kirim tautan bersama dengan baris perintah</b>:
 
 /cmd link
-<b>By replying to link</b>:
-/cmd -n new name -z password -opt x:y|x1:y1
+<b>Dengan membalas ke tautan</b>:
+/cmd -n nama_baru -z kata_sandi -opt x:y|x1:y1
 
-Check here all supported <a href='https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md'>SITES</a>
-Check all yt-dlp api options from this <a href='https://github.com/yt-dlp/yt-dlp/blob/master/yt_dlp/YoutubeDL.py#L212'>FILE</a> or use this <a href='https://t.me/mltb_official_channel/177'>script</a> to convert cli arguments to api options."""
+Cek di sini untuk semua <a href='https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md'>SITUS</a> yang didukung
+Cek semua opsi api yt-dlp dari <a href='https://github.com/yt-dlp/yt-dlp/blob/master/yt_dlp/YoutubeDL.py#L212'>FILE</a> ini atau gunakan <a href='https://t.me/mltb_official_channel/177'>skrip</a> ini untuk mengonversi argumen CLI ke opsi API."""
 
-clone = """Send Gdrive|Gdot|Filepress|Filebee|Appdrive|Gdflix link or rclone path along with command or by replying to the link/rc_path by command.
-Use -sync to use sync method in rclone. Example: /cmd rcl/rclone_path -up rcl/rclone_path/rc -sync"""
+clone = """Kirim tautan Gdrive|Gdot|Filepress|Filebee|Appdrive|Gdflix atau path rclone bersama dengan perintah atau dengan membalas ke tautan/rc_path dengan perintah.
+Gunakan -sync untuk menggunakan metode sinkronisasi di rclone. Contoh: /cmd rcl/path_rclone -up rcl/path_rclone/rc -sync"""
 
-new_name = """<b>New Name</b>: -n
+new_name = """<b>Nama Baru</b>: -n
 
-/cmd link -n new name
-Note: Doesn't work with torrents"""
+/cmd link -n nama baru
+Catatan: Tidak berfungsi untuk torrent"""
 
-multi_link = """<b>Multi links only by replying to first link/file</b>: -i
+multi_link = """<b>Multi tautan hanya dengan membalas ke tautan/file pertama</b>: -i
 
-/cmd -i 10(number of links/files)"""
+/cmd -i 10 (jumlah tautan/file)"""
 
-same_dir = """<b>Move file(s)/folder(s) to new folder</b>: -m
+same_dir = """<b>Pindahkan file/folder ke folder baru</b>: -m
 
-You can use this arg also to move multiple links/torrents contents to the same directory, so all links will be uploaded together as one task
+Kamu juga bisa menggunakan argumen ini untuk memindahkan isi dari beberapa tautan/torrent ke direktori yang sama, jadi semua tautan akan diunggah bersama sebagai satu tugas.
 
-/cmd link -m new folder (only one link inside new folder)
-/cmd -i 10(number of links/files) -m folder name (all links contents in one folder)
-/cmd -b -m folder name (reply to batch of message/file(each link on new line))
+/cmd link -m folder_baru (hanya satu tautan di dalam folder baru)
+/cmd -i 10 (jumlah tautan/file) -m nama_folder (semua isi tautan di dalam satu folder)
+/cmd -b -m nama_folder (balas ke pesan massal/file (tiap tautan di baris baru))
 
-While using bulk you can also use this arg with different folder name along with the links in message or file batch
-Example:
+Saat menggunakan bulk (massal), kamu juga bisa menggunakan argumen ini dengan nama folder yang berbeda bersama tautan di pesan atau file massal.
+Contoh:
 link1 -m folder1
 link2 -m folder1
 link3 -m folder2
 link4 -m folder2
 link5 -m folder3
 link6
-so link1 and link2 content will be uploaded from same folder which is folder1
-link3 and link4 content will be uploaded from same folder also which is folder2
-link5 will uploaded alone inside new folder named folder3
-link6 will get uploaded normally alone
+maka isi dari link1 dan link2 akan diunggah dari folder yang sama yaitu folder1
+isi link3 dan link4 akan diunggah dari folder yang sama juga yaitu folder2
+link5 akan diunggah sendirian di dalam folder baru bernama folder3
+link6 akan diunggah secara normal sendirian
 """
 
-thumb = """<b>Thumbnail for current task</b>: -t
+thumb = """<b>Thumbnail untuk tugas saat ini</b>: -t
 
-/cmd link -t tg-message-link (doc or photo) or none (file without thumb)"""
+/cmd link -t link-pesan-tg (dokumen atau foto) atau none (file tanpa thumbnail)"""
 
-split_size = """<b>Split size for current task</b>: -sp
+split_size = """<b>Ukuran pecahan (split) untuk tugas saat ini</b>: -sp
 
-/cmd link -sp (500mb or 2gb or 4000000000)
-Note: Only mb and gb are supported or write in bytes without unit!"""
+/cmd link -sp (500mb atau 2gb atau 4000000000)
+Catatan: Hanya mb dan gb yang didukung, atau tulis dalam bytes tanpa satuan!"""
 
-upload = """<b>Upload Destination</b>: -up
+upload = """<b>Tujuan Unggahan</b>: -up
 
-/cmd link -up rcl/gdl (rcl: to select rclone config, remote & path | gdl: To select token.pickle, gdrive id) using buttons
-You can directly add the upload path: -up remote:dir/subdir or -up Gdrive_id or -up id/username (telegram) or -up id/username|topic_id (telegram)
-If DEFAULT_UPLOAD is `rc` then you can pass up: `gd` to upload using gdrive tools to GDRIVE_ID.
-If DEFAULT_UPLOAD is `gd` then you can pass up: `rc` to upload to RCLONE_PATH.
+/cmd link -up rcl/gdl (rcl: untuk memilih config rclone, remote & path | gdl: untuk memilih token.pickle, id gdrive) menggunakan tombol
+Kamu bisa langsung menambahkan path unggahan: -up remote:dir/subdir atau -up Id_Gdrive atau -up id/username (telegram) atau -up id/username|id_topik (telegram)
+Jika DEFAULT_UPLOAD adalah `rc` maka kamu bisa memasukkan up: `gd` untuk mengunggah menggunakan alat gdrive ke GDRIVE_ID.
+Jika DEFAULT_UPLOAD adalah `gd` maka kamu bisa memasukkan up: `rc` untuk mengunggah ke RCLONE_PATH.
 
-If you want to add path or gdrive manually from your config/token (UPLOADED FROM USETTING) add mrcc: for rclone and mtp: before the path/gdrive_id without space.
-/cmd link -up mrcc:main:dump or -up mtp:gdrive_id <strong>or you can simply edit upload using owner/user token/config from usetting without adding mtp: or mrcc: before the upload path/id</strong>
+Jika kamu ingin menambahkan path atau gdrive secara manual dari config/token kamu (DIUNGGAH DARI USETTING), tambahkan mrcc: untuk rclone dan mtp: sebelum path/id_gdrive tanpa spasi.
+/cmd link -up mrcc:main:dump atau -up mtp:id_gdrive <strong>atau kamu cukup mengedit unggahan menggunakan token/config owner/user dari usetting tanpa menambahkan mtp: atau mrcc: sebelum path/id unggahan</strong>
 
-To add leech destination:
+Untuk menambahkan tujuan leech:
 -up id/@username/pm
--up b:id/@username/pm (b: means leech by bot) (id or username of the chat or write pm means private message so bot will send the files in private to you)
-when you should use b:(leech by bot)? When your default settings is leech by user and you want to leech by bot for specific task.
--up u:id/@username(u: means leech by user) This incase OWNER added USER_STRING_SESSION.
--up h:id/@username(hybrid leech) h: to upload files by bot and user based on file size.
--up id/@username|topic_id(leech in specific chat and topic) add | without space and write topic id after chat id or username.
+-up b:id/@username/pm (b: artinya leech oleh bot) (id atau username obrolan, atau tulis pm yang berarti pesan pribadi agar bot mengirimkan file secara pribadi kepadamu)
+Kapan harus menggunakan b: (leech oleh bot)? Saat pengaturan default kamu adalah leech oleh pengguna (user) dan kamu ingin melakukan leech menggunakan bot untuk tugas tertentu.
+-up u:id/@username (u: artinya leech oleh pengguna) Ini jika OWNER menambahkan USER_STRING_SESSION.
+-up h:id/@username (leech campuran/hybrid) h: untuk mengunggah file oleh bot dan pengguna berdasarkan ukuran file.
+-up id/@username|id_topik (leech di obrolan dan topik tertentu) tambahkan | tanpa spasi dan tulis id topik setelah id obrolan atau username.
 
-In case you want to specify whether using token.pickle or service accounts you can add tp:gdrive_id (using token.pickle) or sa:gdrive_id (using service accounts) or mtp:gdrive_id (using token.pickle uploaded from usetting).
-DEFAULT_UPLOAD doesn't affect on leech cmds.
+Jika kamu ingin menentukan apakah menggunakan token.pickle atau service accounts, kamu bisa menambahkan tp:id_gdrive (menggunakan token.pickle) atau sa:id_gdrive (menggunakan service accounts) atau mtp:id_gdrive (menggunakan token.pickle pengguna yang diunggah dari usetting).
+DEFAULT_UPLOAD tidak berpengaruh pada perintah leech.
 """
 
-user_download = """<b>User Download</b>: link
+user_download = """<b>Unduhan Pengguna</b>: link
 
-/cmd tp:link to download using owner token.pickle incase service account enabled.
-/cmd sa:link to download using service account incase service account disabled.
-/cmd tp:gdrive_id to download using token.pickle and file_id incase service account enabled.
-/cmd sa:gdrive_id to download using service account and file_id incase service account disabled.
-/cmd mtp:gdrive_id or mtp:link to download using user token.pickle uploaded from usetting
-/cmd mrcc:remote:path to download using user rclone config uploaded from usetting
-you can simply edit upload using owner/user token/config from usetting without adding mtp: or mrcc: before the path/id"""
+/cmd tp:link untuk mengunduh menggunakan token.pickle owner jika service account aktif.
+/cmd sa:link untuk mengunduh menggunakan service account jika service account dinonaktifkan.
+/cmd tp:id_gdrive untuk mengunduh menggunakan token.pickle dan file_id jika service account aktif.
+/cmd sa:id_gdrive untuk mengunduh menggunakan service account dan file_id jika service account dinonaktifkan.
+/cmd mtp:id_gdrive atau mtp:link untuk mengunduh menggunakan token.pickle pengguna yang diunggah dari usetting
+/cmd mrcc:remote:path untuk mengunduh menggunakan config rclone pengguna yang diunggah dari usetting
+kamu cukup mengedit unggahan menggunakan token/config owner/user dari usetting tanpa menambahkan mtp: atau mrcc: sebelum path/id"""
 
-rcf = """<b>Rclone Flags</b>: -rcf
+rcf = """<b>Bendera (Flags) Rclone</b>: -rcf
 
-/cmd link|path|rcl -up path|rcl -rcf --buffer-size:8M|--drive-starred-only|key|key:value
-This will override all other flags except --exclude
-Check here all <a href='https://rclone.org/flags/'>RcloneFlags</a>."""
+/cmd link|path|rcl -up path|rcl -rcf --buffer-size:8M|--drive-starred-only|kunci|kunci:nilai
+Ini akan menimpa semua bendera lain kecuali --exclude
+Cek di sini untuk semua <a href='https://rclone.org/flags/'>Bendera Rclone</a>."""
 
-bulk = """<b>Bulk Download</b>: -b
+bulk = """<b>Unduhan Massal (Bulk)</b>: -b
 
-Bulk can be used only by replying to text message or text file contains links separated by new line.
-Example:
-link1 -n new name -up remote1:path1 -rcf |key:value|key:value
-link2 -z -n new name -up remote2:path2
-link3 -e -n new name -up remote2:path2
-Reply to this example by this cmd -> /cmd -b(bulk)
+Bulk hanya bisa digunakan dengan membalas ke pesan teks atau file teks yang berisi tautan yang dipisahkan oleh baris baru.
+Contoh:
+link1 -n nama baru -up remote1:path1 -rcf |kunci:nilai|kunci:nilai
+link2 -z -n nama baru -up remote2:path2
+link3 -e -n nama baru -up remote2:path2
+Balas ke contoh ini dengan perintah -> /cmd -b (bulk)
 
-Note: Any arg along with the cmd will be setted to all links
-/cmd -b -up remote: -z -m folder name (all links contents in one zipped folder uploaded to one destination)
-so you can't set different upload destinations along with link incase you have added -m along with cmd
-You can set start and end of the links from the bulk like seed, with -b start:end or only end by -b :end or only start by -b start.
-The default start is from zero(first link) to inf."""
+Catatan: Argumen apapun yang menyertai perintah akan diterapkan ke semua tautan
+/cmd -b -up remote: -z -m nama_folder (semua isi tautan dalam satu folder berformat zip diunggah ke satu tujuan)
+jadi kamu tidak bisa mengatur tujuan unggahan yang berbeda di setiap tautan jika kamu menambahkan -m bersama perintah
+Kamu bisa mengatur awal dan akhir tautan dari bulk seperti seed, dengan -b awal:akhir atau hanya akhir dengan -b :akhir atau hanya awal dengan -b awal.
+Nilai default awal adalah dari nol (tautan pertama) hingga tak terbatas."""
 
-rlone_dl = """<b>Rclone Download</b>:
+rlone_dl = """<b>Unduhan Rclone</b>:
 
-Treat rclone paths exactly like links
-/cmd main:dump/ubuntu.iso or rcl(To select config, remote and path)
-Users can add their own rclone from user settings
-If you want to add path manually from your config add mrcc: before the path without space
+Perlakukan path rclone persis seperti tautan
+/cmd main:dump/ubuntu.iso atau rcl (Untuk memilih config, remote dan path)
+Pengguna bisa menambahkan rclone mereka sendiri dari pengaturan pengguna
+Jika kamu ingin menambahkan path secara manual dari config kamu, tambahkan mrcc: sebelum path tanpa spasi
 /cmd mrcc:main:dump/ubuntu.iso
-You can simply edit using owner/user config from usetting without adding mrcc: before the path"""
+Kamu cukup mengedit menggunakan config owner/user dari usetting tanpa menambahkan mrcc: sebelum path"""
 
-extract_zip = """<b>Extract/Zip</b>: -e -z
+extract_zip = """<b>Ekstrak/Zip</b>: -e -z
 
-/cmd link -e password (extract password protected)
-/cmd link -z password (zip password protected)
-/cmd link -z password -e (extract and zip password protected)
-Note: When both extract and zip added with cmd it will extract first and then zip, so always extract first"""
+/cmd link -e kata_sandi (ekstrak dengan perlindungan kata sandi)
+/cmd link -z kata_sandi (zip dengan perlindungan kata sandi)
+/cmd link -z kata_sandi -e (ekstrak dan zip dengan perlindungan kata sandi)
+Catatan: Saat ekstrak dan zip ditambahkan bersama perintah, ia akan mengekstrak dulu lalu men-zip, jadi selalu ekstrak lebih dulu"""
 
-join = """<b>Join Splitted Files</b>: -j
+join = """<b>Gabungkan File Terpecah</b>: -j
 
-This option will only work before extract and zip, so mostly it will be used with -m argument (samedir)
-By Reply:
-/cmd -i 3 -j -m folder name
-/cmd -b -j -m folder name
-if u have link(folder) have splitted files:
+Opsi ini hanya akan berfungsi sebelum ekstrak dan zip, jadi kebanyakan akan digunakan dengan argumen -m (samedir)
+Dengan Balasan:
+/cmd -i 3 -j -m nama_folder
+/cmd -b -j -m nama_folder
+jika kamu punya link (folder) yang berisi file terpecah:
 /cmd link -j"""
 
-tg_links = """<b>TG Links</b>:
+tg_links = """<b>Tautan TG</b>:
 
-Treat links like any direct link
-Some links need user access so you must add USER_SESSION_STRING for it.
-Three types of links:
-Public: https://t.me/channel_name/message_id
-Private: tg://openmessage?user_id=xxxxxx&message_id=xxxxx
-Super: https://t.me/c/channel_id/message_id
-Range: https://t.me/channel_name/first_message_id-last_message_id
-Range Example: tg://openmessage?user_id=xxxxxx&message_id=555-560 or https://t.me/channel_name/100-150
-Note: Range link will work only by replying cmd to it"""
+Perlakukan tautan Telegram seperti tautan langsung (direct link) pada umumnya
+Beberapa tautan membutuhkan akses pengguna jadi kamu harus menambahkan USER_SESSION_STRING untuk itu.
+Tiga jenis tautan:
+Publik: https://t.me/nama_channel/id_pesan
+Pribadi: tg://openmessage?user_id=xxxxxx&message_id=xxxxx
+Super: https://t.me/c/id_channel/id_pesan
+Rentang: https://t.me/nama_channel/id_pesan_awal-id_pesan_akhir
+Contoh Rentang: tg://openmessage?user_id=xxxxxx&message_id=555-560 atau https://t.me/nama_channel/100-150
+Catatan: Tautan rentang (range) hanya akan bekerja dengan membalas perintah ke tautan tersebut"""
 
-sample_video = """<b>Sample Video</b>: -sv
+sample_video = """<b>Video Sampel</b>: -sv
 
-Create sample video for one video or folder of videos.
-/cmd -sv (it will take the default values which 60sec sample duration and part duration is 4sec).
-You can control those values. Example: /cmd -sv 70:5(sample-duration:part-duration) or /cmd -sv :5 or /cmd -sv 70."""
+Buat video sampel untuk satu video atau folder berisi video.
+/cmd -sv (akan mengambil nilai default yaitu durasi sampel 60 detik dan durasi tiap bagian 4 detik).
+Kamu bisa mengubah nilai tersebut. Contoh: /cmd -sv 70:5 (durasi-sampel:durasi-bagian) atau /cmd -sv :5 atau /cmd -sv 70."""
 
-screenshot = """<b>ScreenShots</b>: -ss
+screenshot = """<b>Tangkapan Layar (ScreenShots)</b>: -ss
 
-Create screenshots for one video or folder of videos.
-/cmd -ss (it will take the default values which is 10 photos).
-You can control this value. Example: /cmd -ss 6."""
+Buat tangkapan layar untuk satu video atau folder berisi video.
+/cmd -ss (akan mengambil nilai default yaitu 10 foto).
+Kamu bisa mengubah nilai ini. Contoh: /cmd -ss 6."""
 
-seed = """<b>Bittorrent seed</b>: -d
+seed = """<b>Seed Bittorrent</b>: -d
 
-/cmd link -d ratio:seed_time or by replying to file/link
-To specify ratio and seed time add -d ratio:time.
-Example: -d 0.7:10 (ratio and time) or -d 0.7 (only ratio) or -d :10 (only time) where time in minutes"""
+/cmd link -d rasio:waktu_seed atau dengan membalas ke file/tautan
+Untuk menentukan rasio dan waktu seed tambahkan -d rasio:waktu.
+Contoh: -d 0.7:10 (rasio dan waktu) atau -d 0.7 (hanya rasio) atau -d :10 (hanya waktu) di mana waktu dalam hitungan menit"""
 
-zip_arg = """<b>Zip</b>: -z password
+zip_arg = """<b>Zip</b>: -z kata_sandi
 
 /cmd link -z (zip)
-/cmd link -z password (zip password protected)"""
+/cmd link -z kata_sandi (zip dengan perlindungan kata sandi)"""
 
-qual = """<b>Quality Buttons</b>: -s
+qual = """<b>Tombol Kualitas</b>: -s
 
-In case default quality added from yt-dlp options using format option and you need to select quality for specific link or links with multi links feature.
+Jika kualitas default ditambahkan dari opsi yt-dlp menggunakan opsi format dan kamu perlu memilih kualitas untuk tautan tertentu atau multi tautan.
 /cmd link -s"""
 
-yt_opt = """<b>Options</b>: -opt
+yt_opt = """<b>Opsi</b>: -opt
 
 /cmd link -opt {"format": "bv*+mergeall[vcodec=none]", "nocheckcertificate": True, "playliststart": 10, "fragment_retries": float("inf"), "matchtitle": "S13", "writesubtitles": True, "live_from_start": True, "postprocessor_args": {"ffmpeg": ["-threads", "4"]}, "wait_for_video": (5, 100), "download_ranges": [{"start_time": 0, "end_time": 10}]}
 
-Check all yt-dlp api options from this <a href='https://github.com/yt-dlp/yt-dlp/blob/master/yt_dlp/YoutubeDL.py#L184'>FILE</a> or use this <a href='https://t.me/mltb_official_channel/177'>script</a> to convert cli arguments to api options."""
+Cek semua opsi api yt-dlp dari <a href='https://github.com/yt-dlp/yt-dlp/blob/master/yt_dlp/YoutubeDL.py#L184'>FILE</a> ini atau gunakan <a href='https://t.me/mltb_official_channel/177'>skrip</a> ini untuk mengonversi argumen CLI ke opsi API."""
 
-convert_media = """<b>Convert Media</b>: -ca -cv
-/cmd link -ca mp3 -cv mp4 (convert all audios to mp3 and all videos to mp4)
-/cmd link -ca mp3 (convert all audios to mp3)
-/cmd link -cv mp4 (convert all videos to mp4)
-/cmd link -ca mp3 + flac ogg (convert only flac and ogg audios to mp3)
-/cmd link -cv mkv - webm flv (convert all videos to mp4 except webm and flv)"""
+convert_media = """<b>Konversi Media</b>: -ca -cv
+/cmd link -ca mp3 -cv mp4 (konversi semua audio ke mp3 dan semua video ke mp4)
+/cmd link -ca mp3 (konversi semua audio ke mp3)
+/cmd link -cv mp4 (konversi semua video ke mp4)
+/cmd link -ca mp3 + flac ogg (konversi hanya flac dan ogg audio ke mp3)
+/cmd link -cv mkv - webm flv (konversi semua video ke mp4 kecuali webm dan flv)"""
 
-force_start = """<b>Force Start</b>: -f -fd -fu
-/cmd link -f (force download and upload)
-/cmd link -fd (force download only)
-/cmd link -fu (force upload directly after download finish)"""
+force_start = """<b>Mulai Paksa</b>: -f -fd -fu
+/cmd link -f (paksa unduh dan unggah)
+/cmd link -fd (paksa unduh saja)
+/cmd link -fu (paksa unggah langsung setelah unduhan selesai)"""
 
 gdrive = """<b>Gdrive</b>: link
-If DEFAULT_UPLOAD is `rc` then you can pass up: `gd` to upload using gdrive tools to GDRIVE_ID.
-/cmd gdriveLink or gdl or gdriveId -up gdl or gdriveId or gd
-/cmd tp:gdriveLink or tp:gdriveId -up tp:gdriveId or gdl or gd (to use token.pickle if service account enabled)
-/cmd sa:gdriveLink or sa:gdriveId -p sa:gdriveId or gdl or gd (to use service account if service account disabled)
-/cmd mtp:gdriveLink or mtp:gdriveId -up mtp:gdriveId or gdl or gd(if you have added upload gdriveId from usetting) (to use user token.pickle that uploaded by usetting)
-You can simply edit using owner/user token from usetting without adding mtp: before the id"""
+Jika DEFAULT_UPLOAD adalah `rc` maka kamu bisa memasukkan up: `gd` untuk mengunggah menggunakan alat gdrive ke GDRIVE_ID.
+/cmd TautanGdrive atau gdl atau IdGdrive -up gdl atau IdGdrive atau gd
+/cmd tp:TautanGdrive atau tp:IdGdrive -up tp:IdGdrive atau gdl atau gd (untuk menggunakan token.pickle jika service account aktif)
+/cmd sa:TautanGdrive atau sa:IdGdrive -p sa:IdGdrive atau gdl atau gd (untuk menggunakan service account jika service account dinonaktifkan)
+/cmd mtp:TautanGdrive atau mtp:IdGdrive -up mtp:IdGdrive atau gdl atau gd(jika kamu menambahkan unggahan IdGdrive dari usetting) (untuk menggunakan token.pickle pengguna dari usetting)
+Kamu cukup mengedit menggunakan token owner/user dari usetting tanpa menambahkan mtp: sebelum id"""
 
 rclone_cl = """<b>Rclone</b>: path
-If DEFAULT_UPLOAD is `gd` then you can pass up: `rc` to upload to RCLONE_PATH.
-/cmd rcl/rclone_path -up rcl/rclone_path/rc -rcf flagkey:flagvalue|flagkey|flagkey:flagvalue
-/cmd rcl or rclone_path -up rclone_path or rc or rcl
-/cmd mrcc:rclone_path -up rcl or rc(if you have add rclone path from usetting) (to use user config)
-You can simply edit using owner/user config from usetting without adding mrcc: before the path"""
+Jika DEFAULT_UPLOAD adalah `gd` maka kamu bisa memasukkan up: `rc` untuk mengunggah ke RCLONE_PATH.
+/cmd rcl/path_rclone -up rcl/path_rclone/rc -rcf kuncibendera:nilaibendera|kuncibendera|kuncibendera:nilaibendera
+/cmd rcl atau path_rclone -up path_rclone atau rc atau rcl
+/cmd mrcc:path_rclone -up rcl atau rc (jika kamu menambahkan path rclone dari usetting) (untuk menggunakan config pengguna)
+Kamu cukup mengedit menggunakan config owner/user dari usetting tanpa menambahkan mrcc: sebelum path"""
 
-name_swap = r"""<b>Name Substitution</b>: -ns
-/cmd link -ns script/code/s | mirror/leech | tea/ /s | clone | cpu/ | \[mltb\]/mltb | \\text\\/text/s
-This will affect on all files. Format: wordToReplace/wordToReplaceWith/sensitiveCase
-Word Subtitions. You can add pattern instead of normal text. Timeout: 60 sec
-NOTE: You must add \ before any character, those are the characters: \^$.|?*+()[]{}-
-1. script will get replaced by code with sensitive case
-2. mirror will get replaced by leech
-4. tea will get replaced by space with sensitive case
-5. clone will get removed
-6. cpu will get replaced by space
-7. [mltb] will get replaced by mltb
-8. \text\ will get replaced by text with sensitive case
+name_swap = r"""<b>Penggantian Nama (Name Swap)</b>: -ns
+/cmd link -ns skrip/kode/s | mirror/leech | teh/ /s | clone | cpu/ | \[mltb\]/mltb | \\teks\\/teks/s
+Ini akan berdampak pada semua file. Format: kataYangDiganti/kataPengganti/sensitiveCase
+Penggantian Kata. Kamu bisa menambahkan pola (pattern) alih-alih teks normal. Waktu Habis: 60 dtk
+CATATAN: Kamu harus menambahkan \ sebelum karakter apapun, ini adalah karakternya: \^$.|?*+()[]{}-
+1. skrip akan diganti dengan kode dengan sensitive case
+2. mirror akan diganti dengan leech
+4. teh akan diganti dengan spasi dengan sensitive case
+5. clone akan dihapus
+6. cpu akan diganti dengan spasi
+7. [mltb] akan diganti dengan mltb
+8. \teks\ akan diganti dengan teks dengan sensitive case
 """
 
-transmission = """<b>Tg transmission</b>: -hl -ut -bt
-/cmd link -hl (leech by user and bot session with respect to size) (Hybrid Leech)
-/cmd link -bt (leech by bot session)
-/cmd link -ut (leech by user)"""
+transmission = """<b>Transmisi TG</b>: -hl -ut -bt
+/cmd link -hl (leech oleh pengguna dan sesi bot berdasarkan ukuran file) (Hybrid Leech)
+/cmd link -bt (leech oleh sesi bot)
+/cmd link -ut (leech oleh pengguna)"""
 
-thumbnail_layout = """Thumbnail Layout: -tl
-/cmd link -tl 3x3 (widthxheight) 3 photos in row and 3 photos in column"""
+thumbnail_layout = """Tata Letak Thumbnail: -tl
+/cmd link -tl 3x3 (lebarxtinggi) 3 foto di baris dan 3 foto di kolom"""
 
-leech_as = """<b>Leech as</b>: -doc -med
-/cmd link -doc (Leech as document)
-/cmd link -med (Leech as media)"""
+leech_as = """<b>Leech Sebagai</b>: -doc -med
+/cmd link -doc (Leech sebagai dokumen)
+/cmd link -med (Leech sebagai media)"""
 
-ffmpeg_cmds = """<b>FFmpeg Commands</b>: -ff
-list of lists of ffmpeg commands. You can set multiple ffmpeg commands for all files before upload. Don't write ffmpeg at beginning, start directly with the arguments.
-Notes:
-1. Add <code>-del</code> to the list(s) which you want from the bot to delete the original files after command run complete!
-3. To execute one of pre-added lists in bot like: ({"subtitle": ["-i mltb.mkv -c copy -c:s srt mltb.mkv"]}), you must use -ff subtitle (list key)
-Examples: ["-i mltb.mkv -c copy -c:s srt mltb.mkv", "-i mltb.video -c copy -c:s srt mltb", "-i mltb.m4a -c:a libmp3lame -q:a 2 mltb.mp3", "-i mltb.audio -c:a libmp3lame -q:a 2 mltb.mp3", "-i mltb -map 0:a -c copy mltb.mka -map 0:s -c copy mltb.srt"]
-Here I will explain how to use mltb.* which is reference to files you want to work on.
-1. First cmd: the input is mltb.mkv so this cmd will work only on mkv videos and the output is mltb.mkv also so all outputs is mkv. -del will delete the original media after complete run of the cmd.
-2. Second cmd: the input is mltb.video so this cmd will work on all videos and the output is only mltb so the extenstion is same as input files.
-3. Third cmd: the input in mltb.m4a so this cmd will work only on m4a audios and the output is mltb.mp3 so the output extension is mp3.
-4. Fourth cmd: the input is mltb.audio so this cmd will work on all audios and the output is mltb.mp3 so the output extension is mp3."""
+ffmpeg_cmds = """<b>Perintah FFmpeg</b>: -ff
+daftar dari perintah ffmpeg. Kamu bisa mengatur beberapa perintah ffmpeg untuk semua file sebelum diunggah. Jangan tulis ffmpeg di awal, langsung mulai dengan argumennya.
+Catatan:
+1. Tambahkan <code>-del</code> ke dalam daftar jika kamu ingin bot menghapus file asli setelah perintah selesai dijalankan!
+3. Untuk mengeksekusi salah satu daftar yang sudah ditambahkan di bot seperti: ({"subtitle": ["-i mltb.mkv -c copy -c:s srt mltb.mkv"]}), kamu harus menggunakan -ff subtitle (kunci daftar)
+Contoh: ["-i mltb.mkv -c copy -c:s srt mltb.mkv", "-i mltb.video -c copy -c:s srt mltb", "-i mltb.m4a -c:a libmp3lame -q:a 2 mltb.mp3", "-i mltb.audio -c:a libmp3lame -q:a 2 mltb.mp3", "-i mltb -map 0:a -c copy mltb.mka -map 0:s -c copy mltb.srt"]
+Di sini saya akan menjelaskan bagaimana menggunakan mltb.* yang mereferensikan file yang ingin dikerjakan.
+1. Perintah pertama: input mltb.mkv, jadi perintah ini hanya bekerja pada video mkv dan outputnya juga mltb.mkv. -del akan menghapus media asli setelah selesai.
+2. Perintah kedua: input mltb.video, jadi perintah ini bekerja pada semua video dan outputnya hanya mltb (ekstensi sama dengan input).
+3. Perintah ketiga: input mltb.m4a, jadi perintah ini hanya bekerja pada audio m4a dan outputnya mltb.mp3.
+4. Perintah keempat: input mltb.audio, jadi perintah ini bekerja pada semua audio dan outputnya mltb.mp3."""
 
 metadata = """<b>Metadata</b>: -meta
 
-Apply custom metadata to media files using pipe (|) separator.
+Terapkan metadata kustom ke file media menggunakan pemisah pipa (|).
 
-<b>Format:</b> key=value|key2=value2|key3=value3
+<b>Format:</b> kunci=nilai|kunci2=nilai2|kunci3=nilai3
 
-<b>Dynamic Variables:</b>
-• <code>{filename}</code> - Original filename
-• <code>{basename}</code> - Filename without extension  
-• <code>{extension}</code> - File extension
-• <code>{audiolang}</code> - Audio language (auto-detected or English)
-• <code>{sublang}</code> - Subtitle language (auto-detected or none)
-• <code>{year}</code> - Year extracted from filename
+<b>Variabel Dinamis:</b>
+• <code>{filename}</code> - Nama file asli
+• <code>{basename}</code> - Nama file tanpa ekstensi  
+• <code>{extension}</code> - Ekstensi file
+• <code>{audiolang}</code> - Bahasa audio (terdeteksi otomatis atau bahasa Inggris)
+• <code>{sublang}</code> - Bahasa subtitle (terdeteksi otomatis atau tidak ada)
+• <code>{year}</code> - Tahun yang diekstrak dari nama file
 
-<b>Per-Stream Metadata:</b>
-Set different metadata for audio/video/subtitle streams in User Settings > FFmpeg Settings:
-• <b>Audio Metadata:</b> Applied to each audio stream
-• <b>Video Metadata:</b> Applied to video streams  
-• <b>Subtitle Metadata:</b> Applied to subtitle streams
+<b>Metadata Per-Stream:</b>
+Atur metadata yang berbeda untuk stream audio/video/subtitle di Pengaturan Pengguna > Pengaturan FFmpeg:
+• <b>Metadata Audio:</b> Diterapkan pada setiap stream audio
+• <b>Metadata Video:</b> Diterapkan pada stream video  
+• <b>Metadata Subtitle:</b> Diterapkan pada stream subtitle
 
-<b>Examples:</b>
-<code>/mirror link -meta title=My Movie|artist={audiolang} Version</code>
-<code>/yt link -meta album={basename}|year={year}|genre=Action</code>
+<b>Contoh:</b>
+<code>/mirror link -meta title=Film Saya|artist={audiolang} Version</code>
+<code>/yt link -meta album={basename}|year={year}|genre=Aksi</code>
 
-<b>Escape Pipes:</b> Use <code>\\|</code> to include literal pipe in values:
-<code>title=Movie \\| Director's Cut</code>
+<b>Menghindari Pipa:</b> Gunakan <code>\\|</code> untuk menyertakan karakter pipa literal pada nilai:
+<code>title=Film \\| Edisi Sutradara</code>
 
-<b>User Settings Example:</b>
-• Audio Metadata: <code>language={audiolang}|title=Audio Track</code>
-• Video Metadata: <code>title={basename}|year={year}</code>
-• Subtitle Metadata: <code>language={sublang}|title=Subtitles</code>"""
+<b>Contoh Pengaturan Pengguna:</b>
+• Metadata Audio: <code>language={audiolang}|title=Track Audio</code>
+• Metadata Video: <code>title={basename}|year={year}</code>
+• Metadata Subtitle: <code>language={sublang}|title=Subtitle</code>"""
 
 YT_HELP_DICT = {
     "main": yt,
-    "New-Name": f"{new_name}\nNote: Don't add file extension",
+    "New-Name": f"{new_name}\nCatatan: Jangan tambahkan ekstensi file",
     "Zip": zip_arg,
     "Quality": qual,
     "Options": yt_opt,
@@ -311,10 +311,10 @@ YT_HELP_DICT = {
 MIRROR_HELP_DICT = {
     "main": mirror,
     "New-Name": new_name,
-    "DL-Auth": "<b>Direct link authorization</b>: -au -ap\n\n/cmd link -au username -ap password",
-    "Headers": "<b>Direct link custom headers</b>: -h\n\n/cmd link -h key: value key1: value1",
+    "DL-Auth": "<b>Otorisasi Tautan Langsung</b>: -au -ap\n\n/cmd link -au username -ap kata_sandi",
+    "Headers": "<b>Header kustom tautan langsung</b>: -h\n\n/cmd link -h kunci: nilai kunci1: nilai1",
     "Extract/Zip": extract_zip,
-    "Select-Files": "<b>Bittorrent/JDownloader/Sabnzbd File Selection</b>: -s\n\n/cmd link -s or by replying to file/link",
+    "Select-Files": "<b>Pemilihan File Bittorrent/JDownloader/Sabnzbd</b>: -s\n\n/cmd link -s atau dengan membalas ke file/tautan",
     "Torrent-Seed": seed,
     "Multi-Link": multi_link,
     "Same-Directory": same_dir,
@@ -348,34 +348,34 @@ CLONE_HELP_DICT = {
 }
 
 RSS_HELP_MESSAGE = """
-Use this format to add feed url:
-Title1 link (required)
-Title2 link -c cmd -inf xx -exf xx
-Title3 link -c cmd -d ratio:time -z password
+Gunakan format ini untuk menambahkan url feed:
+Judul1 link (wajib)
+Judul2 link -c cmd -inf xx -exf xx
+Judul3 link -c cmd -d rasio:waktu -z kata_sandi
 
--c command -up mrcc:remote:path/subdir -rcf --buffer-size:8M|key|key:value
--inf For included words filter.
--exf For excluded words filter.
--stv true or false (sensitive filter)
+-c perintah -up mrcc:remote:path/subdir -rcf --buffer-size:8M|kunci|kunci:nilai
+-inf Untuk filter kata yang disertakan (included words).
+-exf Untuk filter kata yang dikecualikan (excluded words).
+-stv true atau false (filter case sensitive)
 
-Example: Title https://www.rss-url.com -inf 1080 or 720 or 144p|mkv or mp4|hevc -exf flv or web|xxx
-This filter will parse links that its titles contain `(1080 or 720 or 144p) and (mkv or mp4) and hevc` and doesn't contain (flv or web) and xxx words. You can add whatever you want.
+Contoh: Judul https://www.url-rss.com -inf 1080 atau 720 atau 144p|mkv atau mp4|hevc -exf flv atau web|xxx
+Filter ini akan mengambil tautan yang judulnya mengandung `(1080 atau 720 atau 144p) dan (mkv atau mp4) dan hevc` dan tidak mengandung kata (flv atau web) dan xxx. Kamu bisa menambahkan apapun sesukamu.
 
-Another example: -inf  1080  or 720p|.web. or .webrip.|hvec or x264. This will parse titles that contain ( 1080  or 720p) and (.web. or .webrip.) and (hvec or x264). I have added space before and after 1080 to avoid wrong matching. If this `10805695` number in title it will match 1080 if added 1080 without spaces after it.
+Contoh lain: -inf  1080  atau 720p|.web. atau .webrip.|hvec atau x264. Ini akan mengambil judul yang mengandung ( 1080  atau 720p) dan (.web. atau .webrip.) dan (hvec atau x264). Saya telah menambahkan spasi sebelum dan sesudah 1080 untuk menghindari pencocokan yang salah. Jika ada angka `10805695` di judul, itu akan cocok dengan 1080 jika ditambahkan 1080 tanpa spasi sesudahnya.
 
-Filter Notes:
-1. | means and.
-2. Add `or` between similar keys, you can add it between qualities or between extensions, so don't add filter like this f: 1080|mp4 or 720|web because this will parse 1080 and (mp4 or 720) and web ... not (1080 and mp4) or (720 and web).
-3. You can add `or` and `|` as much as you want.
-4. Take a look at the title if it has a static special character after or before the qualities or extensions or whatever and use them in the filter to avoid wrong match.
-Timeout: 60 sec.
+Catatan Filter:
+1. | artinya dan.
+2. Tambahkan `atau` di antara kunci yang serupa, kamu bisa menambahkannya di antara kualitas atau ekstensi, jadi jangan gunakan filter seperti ini f: 1080|mp4 atau 720|web karena ini akan mengambil 1080 dan (mp4 atau 720) dan web ... bukan (1080 dan mp4) atau (720 dan web).
+3. Kamu bisa menambahkan `atau` dan `|` sebanyak yang kamu mau.
+4. Perhatikan judul jika memiliki karakter spesial statis sesudah atau sebelum kualitas/ekstensi dan gunakan di filter untuk mencegah pencocokan yang salah.
+Waktu Habis: 60 dtk.
 """
 
 PASSWORD_ERROR_MESSAGE = """
-<b>This link requires a password!</b>
-- Insert <b>::</b> after the link and write the password after the sign.
+<b>Tautan ini membutuhkan kata sandi!</b>
+- Sisipkan <b>::</b> setelah tautan dan tulis kata sandi setelah tanda tersebut.
 
-<b>Example:</b> link::my password
+<b>Contoh:</b> link::kata sandi saya
 """
 
 
@@ -383,32 +383,32 @@ def get_bot_commands():
     from ...core.plugin_manager import get_plugin_manager
 
     static_commands = {
-        "Mirror": "[link/file] Mirror to Upload Destination",
-        "QbMirror": "[magnet/torrent] Mirror to Upload Destination using qbit",
-        "Ytdl": "[link] Mirror YouTube, m3u8, Social Media and yt-dlp supported urls",
-        "UpHoster": "[link/file] Upload to DDL Servers",
-        "Leech": "[link/file] Leech files to Upload to Telegram",
-        "QbLeech": "[magnet/torrent] Leech files to Upload to Telegram using qbit",
-        "YtdlLeech": "[link] Leech YouTube, m3u8, Social Media and yt-dlp supported urls",
-        "Clone": "[link] Clone files/folders to GDrive",
-        "UserSet": "User personal settings",
-        "ForceStart": "[gid/reply] Force start from queued task",
-        "Count": "[link] Count no. of files/folders in GDrive",
-        "List": "[query] Search any Text which is available in GDrive",
-        "Search": "[query] Search torrents via Qbit Plugins",
-        "MediaInfo": "[reply/link] Get MediaInfo of the Target Media",
-        "Select": "[gid/reply] Select files for NZB, Aria2, Qbit Tasks",
-        "Ping": "Ping Bot to test Response Speed",
-        "Status": "[id/me] Tasks Status of Bot",
-        "Stats": "Bot, OS, Repo & System full Statistics",
-        "Rss": "User RSS Management Settings",
-        "IMDB": "[query] or ttxxxxxx Get IMDB info",
-        "CancelAll": "Cancel all Tasks on the Bot",
-        "Help": "Detailed help usage of the WZ Bot",
-        "BotSet": "[SUDO] Bot Management Settings",
-        "Log": "[SUDO] Get Bot Logs for Internal Working",
-        "Restart": "[SUDO] Reboot bot",
-        "RestartSessions": "[SUDO] Reboot User Sessions",
+        "Mirror": "[link/file] Mirror ke Tujuan Unggahan",
+        "QbMirror": "[magnet/torrent] Mirror ke Tujuan Unggahan menggunakan qbit",
+        "Ytdl": "[link] Mirror YouTube, m3u8, Media Sosial dan url yang didukung yt-dlp",
+        "UpHoster": "[link/file] Unggah ke Server DDL",
+        "Leech": "[link/file] Leech file untuk Diunggah ke Telegram",
+        "QbLeech": "[magnet/torrent] Leech file untuk Diunggah ke Telegram menggunakan qbit",
+        "YtdlLeech": "[link] Leech YouTube, m3u8, Media Sosial dan url yang didukung yt-dlp",
+        "Clone": "[link] Kloning (Clone) file/folder ke GDrive",
+        "UserSet": "Pengaturan pribadi pengguna",
+        "ForceStart": "[gid/balasan] Mulai paksa dari tugas dalam antrean",
+        "Count": "[link] Hitung jumlah file/folder di GDrive",
+        "List": "[kueri] Cari Teks apapun yang tersedia di GDrive",
+        "Search": "[kueri] Cari torrent via Plugin Qbit",
+        "MediaInfo": "[balasan/link] Dapatkan MediaInfo dari Target Media",
+        "Select": "[gid/balasan] Pilih file untuk Tugas NZB, Aria2, Qbit",
+        "Ping": "Ping Bot untuk menguji Kecepatan Respons",
+        "Status": "[id/me] Status Tugas Bot",
+        "Stats": "Statistik lengkap Bot, OS, Repositori & Sistem",
+        "Rss": "Pengaturan Manajemen RSS Pengguna",
+        "IMDB": "[kueri] atau ttxxxxxx Dapatkan info IMDB",
+        "CancelAll": "Batalkan semua Tugas pada Bot",
+        "Help": "Panduan penggunaan rinci dari Bot WZ",
+        "BotSet": "[SUDO] Pengaturan Manajemen Bot",
+        "Log": "[SUDO] Dapatkan Log Bot untuk Pengecekan Internal",
+        "Restart": "[SUDO] Muat ulang (Reboot) bot",
+        "RestartSessions": "[SUDO] Muat ulang (Reboot) Sesi Pengguna",
     }
 
     commands = static_commands.copy()
@@ -419,7 +419,7 @@ def get_bot_commands():
             if plugin_info.enabled and plugin_info.commands:
                 for cmd in plugin_info.commands:
                     if cmd == "speedtest":
-                        commands["SpeedTest"] = "Check Bot Speed using Speedtest.com"
+                        commands["SpeedTest"] = "Cek Kecepatan Bot menggunakan Speedtest.com"
 
     return commands
 
@@ -430,7 +430,7 @@ BOT_COMMANDS = get_bot_commands()
 def get_help_string():
     from ..telegram_helper.bot_commands import BotCommands
 
-    help_lines = ["NOTE: Try each command without any argument to see more detalis."]
+    help_lines = ["CATATAN: Coba setiap perintah tanpa argumen apapun untuk melihat rincian lebih lanjut."]
 
     commands = BotCommands.get_commands()
 
@@ -440,110 +440,110 @@ def get_help_string():
             continue
 
         if isinstance(cmd_attr, list):
-            cmd_str = f"/{' or /'.join(cmd_attr)}"
+            cmd_str = f"/{' atau /'.join(cmd_attr)}"
         else:
             cmd_str = f"/{cmd_attr}"
 
         if key == "SpeedTest" and key in BOT_COMMANDS:
-            help_lines.append(f"{cmd_str}: Check Bot Speed using Speedtest.com")
+            help_lines.append(f"{cmd_str}: Cek Kecepatan Bot menggunakan Speedtest.com")
         elif key == "Mirror":
-            help_lines.append(f"{cmd_str}: Start mirroring to cloud.")
+            help_lines.append(f"{cmd_str}: Mulai mirroring ke cloud.")
         elif key == "QbMirror":
-            help_lines.append(f"{cmd_str}: Start Mirroring to cloud using qBittorrent.")
+            help_lines.append(f"{cmd_str}: Mulai Mirroring ke cloud menggunakan qBittorrent.")
         elif key == "JdMirror":
-            help_lines.append(f"{cmd_str}: Start Mirroring to cloud using JDownloader.")
+            help_lines.append(f"{cmd_str}: Mulai Mirroring ke cloud menggunakan JDownloader.")
         elif key == "NzbMirror":
-            help_lines.append(f"{cmd_str}: Start Mirroring to cloud using Sabnzbd.")
+            help_lines.append(f"{cmd_str}: Mulai Mirroring ke cloud menggunakan Sabnzbd.")
         elif key == "Ytdl":
-            help_lines.append(f"{cmd_str}: Mirror yt-dlp supported link.")
+            help_lines.append(f"{cmd_str}: Mirror tautan yang didukung yt-dlp.")
         elif key == "UpHoster":
-            help_lines.append(f"{cmd_str}: Upload to DDL Servers.")
+            help_lines.append(f"{cmd_str}: Unggah ke Server DDL.")
         elif key == "Leech":
-            help_lines.append(f"{cmd_str}: Start leeching to Telegram.")
+            help_lines.append(f"{cmd_str}: Mulai leeching ke Telegram.")
         elif key == "QbLeech":
-            help_lines.append(f"{cmd_str}: Start leeching using qBittorrent.")
+            help_lines.append(f"{cmd_str}: Mulai leeching menggunakan qBittorrent.")
         elif key == "JdLeech":
-            help_lines.append(f"{cmd_str}: Start leeching using JDownloader.")
+            help_lines.append(f"{cmd_str}: Mulai leeching menggunakan JDownloader.")
         elif key == "NzbLeech":
-            help_lines.append(f"{cmd_str}: Start leeching using Sabnzbd.")
+            help_lines.append(f"{cmd_str}: Mulai leeching menggunakan Sabnzbd.")
         elif key == "YtdlLeech":
-            help_lines.append(f"{cmd_str}: Leech yt-dlp supported link.")
+            help_lines.append(f"{cmd_str}: Leech tautan yang didukung yt-dlp.")
         elif key == "Clone":
             help_lines.append(
-                f"{cmd_str} [drive_url]: Copy file/folder to Google Drive."
+                f"{cmd_str} [url_drive]: Salin file/folder ke Google Drive."
             )
         elif key == "Count":
             help_lines.append(
-                f"{cmd_str} [drive_url]: Count file/folder of Google Drive."
+                f"{cmd_str} [url_drive]: Hitung file/folder dari Google Drive."
             )
         elif key == "Delete":
             help_lines.append(
-                f"{cmd_str} [drive_url]: Delete file/folder from Google Drive (Only Owner & Sudo)."
+                f"{cmd_str} [url_drive]: Hapus file/folder dari Google Drive (Hanya Owner & Sudo)."
             )
         elif key == "UserSet":
-            help_lines.append(f"{cmd_str} [query]: Users settings.")
+            help_lines.append(f"{cmd_str} [kueri]: Pengaturan pengguna.")
         elif key == "BotSet":
-            help_lines.append(f"{cmd_str} [query]: Bot settings.")
+            help_lines.append(f"{cmd_str} [kueri]: Pengaturan bot.")
         elif key == "Select":
             help_lines.append(
-                f"{cmd_str}: Select files from torrents or nzb by gid or reply."
+                f"{cmd_str}: Pilih file dari torrent atau nzb dengan gid atau balasan."
             )
         elif key == "CancelTask":
-            help_lines.append(f"{cmd_str} [gid]: Cancel task by gid or reply.")
+            help_lines.append(f"{cmd_str} [gid]: Batalkan tugas dengan gid atau balasan.")
         elif key == "ForceStart":
-            help_lines.append(f"{cmd_str} [gid]: Force start task by gid or reply.")
+            help_lines.append(f"{cmd_str} [gid]: Mulai paksa tugas dengan gid atau balasan.")
         elif key == "CancelAll":
-            help_lines.append(f"{cmd_str} [query]: Cancel all [status] tasks.")
+            help_lines.append(f"{cmd_str} [kueri]: Batalkan semua tugas [status].")
         elif key == "List":
-            help_lines.append(f"{cmd_str} [query]: Search in Google Drive(s).")
+            help_lines.append(f"{cmd_str} [kueri]: Cari di Google Drive.")
         elif key == "Search":
-            help_lines.append(f"{cmd_str} [query]: Search for torrents with API.")
+            help_lines.append(f"{cmd_str} [kueri]: Cari torrent dengan API.")
         elif key == "MediaInfo":
-            help_lines.append(f"{cmd_str} [query]: Get media info.")
+            help_lines.append(f"{cmd_str} [kueri]: Dapatkan info media.")
         elif key == "Status":
-            help_lines.append(f"{cmd_str}: Shows a status of all the downloads.")
+            help_lines.append(f"{cmd_str}: Menampilkan status dari semua unduhan.")
         elif key == "Stats":
             help_lines.append(
-                f"{cmd_str}: Show stats of the machine where the bot is hosted in."
+                f"{cmd_str}: Tampilkan statistik dari mesin tempat bot dijalankan."
             )
         elif key == "Ping":
             help_lines.append(
-                f"{cmd_str}: Check how long it takes to Ping the Bot (Only Owner & Sudo)."
+                f"{cmd_str}: Cek berapa lama waktu yang dibutuhkan untuk Ping Bot (Hanya Owner & Sudo)."
             )
         elif key == "Authorize":
             help_lines.append(
-                f"{cmd_str}: Authorize a chat or a user to use the bot (Only Owner & Sudo)."
+                f"{cmd_str}: Otorisasi sebuah obrolan atau pengguna untuk memakai bot (Hanya Owner & Sudo)."
             )
         elif key == "UnAuthorize":
             help_lines.append(
-                f"{cmd_str}: Unauthorize a chat or a user to use the bot (Only Owner & Sudo)."
+                f"{cmd_str}: Cabut otorisasi obrolan atau pengguna untuk memakai bot (Hanya Owner & Sudo)."
             )
         elif key == "Users":
-            help_lines.append(f"{cmd_str}: show users settings (Only Owner & Sudo).")
+            help_lines.append(f"{cmd_str}: tampilkan pengaturan pengguna (Hanya Owner & Sudo).")
         elif key == "AddSudo":
-            help_lines.append(f"{cmd_str}: Add sudo user (Only Owner).")
+            help_lines.append(f"{cmd_str}: Tambahkan pengguna sudo (Hanya Owner).")
         elif key == "RmSudo":
-            help_lines.append(f"{cmd_str}: Remove sudo users (Only Owner).")
+            help_lines.append(f"{cmd_str}: Hapus pengguna sudo (Hanya Owner).")
         elif key == "Restart":
             help_lines.append(
-                f"{cmd_str}: Restart and update the bot (Only Owner & Sudo)."
+                f"{cmd_str}: Mulai ulang dan perbarui bot (Hanya Owner & Sudo)."
             )
         elif key == "Log":
             help_lines.append(
-                f"{cmd_str}: Get a log file of the bot. Handy for getting crash reports (Only Owner & Sudo)."
+                f"{cmd_str}: Dapatkan file log dari bot. Berguna untuk mendapatkan laporan crash (Hanya Owner & Sudo)."
             )
         elif key == "Shell":
-            help_lines.append(f"{cmd_str}: Run shell commands (Only Owner).")
+            help_lines.append(f"{cmd_str}: Jalankan perintah shell (Hanya Owner).")
         elif key == "AExec":
-            help_lines.append(f"{cmd_str}: Exec async functions (Only Owner).")
+            help_lines.append(f"{cmd_str}: Eksekusi fungsi async (Hanya Owner).")
         elif key == "Exec":
-            help_lines.append(f"{cmd_str}: Exec sync functions (Only Owner).")
+            help_lines.append(f"{cmd_str}: Eksekusi fungsi sync (Hanya Owner).")
         elif key == "ClearLocals":
             help_lines.append(
-                f"/{BotCommands.ClearLocalsCommand}: Clear {BotCommands.AExecCommand} or {BotCommands.ExecCommand} locals (Only Owner)."
+                f"/{BotCommands.ClearLocalsCommand}: Bersihkan lokal {BotCommands.AExecCommand} atau {BotCommands.ExecCommand} (Hanya Owner)."
             )
         elif key == "Rss":
-            help_lines.append(f"/{BotCommands.RssCommand}: RSS Menu.")
+            help_lines.append(f"/{BotCommands.RssCommand}: Menu RSS.")
 
     return "\n".join(help_lines)
 
