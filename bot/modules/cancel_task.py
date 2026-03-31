@@ -176,7 +176,7 @@ async def cancel_all_update(_, query):
         # Mengubah tampilan konfirmasi agar lebih manusiawi
         display_status = data[2]
         await edit_message(
-            message, f"Apakah kamu yakin ingin membatalkan semua tugas <b>{display_status}</b>?", button
+            message, f"Apakah kamu yakin ingin membatalkan <b>{display_status}</b> tugas ?", button
         )
     else:
         button = create_cancel_buttons(is_sudo, user_id)
