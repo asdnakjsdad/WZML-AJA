@@ -104,19 +104,19 @@ class TaskListener(TaskConfig):
         if self.bot_pm and self.is_super_chat:
             self.pm_msg = await send_message(
                 self.user_id,
-                f"""➲ <b><u>Task Started :</u></b>
+                f"""➲ <b><u>Tugas Dimulai :</u></b>
 ┃
-┖ <b>Link:</b> <a href='{self.source_url}'>Click Here</a>
+┖ <b>Tautan:</b> <a href='{self.source_url}'>Klik Di Sini</a>
 """,
             )
         if Config.LINKS_LOG_ID:
             await send_message(
                 Config.LINKS_LOG_ID,
-                f"""➲  <b><u>{mode_name} Started:</u></b>
+                f"""➲  <b><u>{mode_name} Dimulai:</u></b>
  ┃
- ┠ <b>User :</b> {self.tag} ( #ID{self.user_id} )
- ┠ <b>Message Link :</b> <a href='{self.message.link}'>Click Here</a>
- ┗ <b>Link:</b> <a href='{self.source_url}'>Click Here</a>
+ ┠ <b>Pengguna :</b> {self.tag} ( #ID{self.user_id} )
+ ┠ <b>Tautan Pesan :</b> <a href='{self.message.link}'>Klik Di Sini</a>
+ ┗ <b>Tautan:</b> <a href='{self.source_url}'>Klik Di Sini</a>
  """,
             )
         if (
@@ -178,7 +178,7 @@ class TaskListener(TaskConfig):
         if multi_links:
             self.seed = False
             await self.on_upload_error(
-                f"{self.name} Downloaded!\n\nWaiting for other tasks to finish..."
+                f"{self.name} Diunduh!\n\nMenunggu tugas lain selesai..."
             )
             return
         elif self.same_dir:
@@ -405,29 +405,29 @@ class TaskListener(TaskConfig):
             await database.rm_complete_task(self.message.link)
         msg = (
             f"<b><i>{escape(self.name)}</i></b>\n│"
-            f"\n┟ <b>Task Size</b> → {get_readable_file_size(self.size)}"
-            f"\n┠ <b>Time Taken</b> → {get_readable_time(time() - self.message.date.timestamp())}"
-            f"\n┠ <b>In Mode</b> → {self.mode[0]}"
-            f"\n┠ <b>Out Mode</b> → {self.mode[1]}"
+            f"\n┟ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}"
+            f"\n┠ <b>Waktu Ditempuh</b> → {get_readable_time(time() - self.message.date.timestamp())}"
+            f"\n┠ <b>Mode Masuk</b> → {self.mode[0]}"
+            f"\n┠ <b>Mode Keluar</b> → {self.mode[1]}"
         )
         LOGGER.info(f"Task Done: {self.name}")
         if self.is_yt:
             buttons = ButtonMaker()
             if mime_type == "Folder/Playlist":
-                msg += "\n┠ <b>Type</b> → Playlist"
-                msg += f"\n┖ <b>Total Videos</b> → {files}"
+                msg += "\n┠ <b>Tipe</b> → Playlist"
+                msg += f"\n┖ <b>Total Video</b> → {files}"
                 if link:
-                    buttons.url_button("🔗 View Playlist", link)
-                user_message = f"{self.tag}\nYour playlist ({files} videos) has been uploaded to YouTube successfully!"
+                    buttons.url_button("🔗 Lihat Playlist", link)
+                user_message = f"{self.tag}\nPlaylist Anda ({files} video) telah berhasil diunggah ke YouTube!"
             else:
-                msg += "\n┖ <b>Type</b> → Video"
+                msg += "\n┖ <b>Tipe</b> → Video"
                 if link:
-                    buttons.url_button("🔗 View Video", link)
+                    buttons.url_button("🔗 Lihat Video", link)
                 user_message = (
-                    f"{self.tag}\nYour video has been uploaded to YouTube successfully!"
+                    f"{self.tag}\nVideo Anda telah berhasil diunggah ke YouTube!"
                 )
 
-            msg += f"\n\n<b>Task By: </b>{self.tag}"
+            msg += f"\n\n<b>Tugas Oleh: </b>{self.tag}"
 
             button = buttons.build_menu(1) if link else None
 
@@ -437,15 +437,15 @@ class TaskListener(TaskConfig):
             await send_message(self.message, user_message, button)
 
         elif self.is_leech:
-            msg += f"\n<b>Total Files: </b>{folders}"
+            msg += f"\n<b>Total File: </b>{folders}"
             if mime_type != 0:
-                msg += f"\n┠ <b>Corrupted Files</b> → {mime_type}"
-            msg += f"\n┖ <b>Task By</b> → {self.tag}\n\n"
+                msg += f"\n┠ <b>File Rusak</b> → {mime_type}"
+            msg += f"\n┖ <b>Tugas Oleh</b> → {self.tag}\n\n"
 
             if self.bot_pm:
                 pmsg = msg
-                pmsg += "〶 <b><u>Action Performed :</u></b>\n"
-                pmsg += "⋗ <i>File(s) have been sent to User PM</i>\n\n"
+                pmsg += "〶 <b><u>Tindakan Dilakukan :</u></b>\n"
+                pmsg += "⋗ <i>File telah dikirim ke PM Pengguna</i>\n\n"
                 if self.is_super_chat:
                     await send_message(self.message, pmsg)
 
@@ -453,7 +453,7 @@ class TaskListener(TaskConfig):
                 await send_message(self.message, msg)
             else:
                 log_chat = self.user_id if self.bot_pm else self.message
-                msg += "〶 <b><u>Files List :</u></b>\n"
+                msg += "〶 <b><u>Daftar File :</u></b>\n"
                 fmsg = ""
                 for index, (link, name) in enumerate(files.items(), start=1):
                     chat_id, msg_id = link.split("/")[-2:]
@@ -464,7 +464,7 @@ class TaskListener(TaskConfig):
                         if chat_id.isdigit():
                             chat_id = f"-100{chat_id}"
                         flink = f"https://t.me/{TgClient.BNAME}?start={encode_slink('file' + chat_id + '&&' + msg_id)}"
-                        fmsg += f"\n┖ <b>Get Media</b> → <a href='{flink}'>Store Link</a> | <a href='https://t.me/share/url?url={flink}'>Share Link</a>"
+                        fmsg += f"\n┖ <b>Ambil Media</b> → <a href='{flink}'>Tautan Simpan</a> | <a href='https://t.me/share/url?url={flink}'>Tautan Bagikan</a>"
                     fmsg += "\n"
                     if len(fmsg.encode() + msg.encode()) > 4000:
                         await send_message(log_chat, msg + fmsg)
@@ -473,10 +473,10 @@ class TaskListener(TaskConfig):
                 if fmsg != "":
                     await send_message(log_chat, msg + fmsg)
         else:
-            msg += f"\n│\n┟ <b>Type</b> → {mime_type}"
+            msg += f"\n│\n┟ <b>Tipe</b> → {mime_type}"
             if mime_type == "Folder":
-                msg += f"\n┠ <b>SubFolders</b> → {folders}"
-                msg += f"\n┠ <b>Files</b> → {files}"
+                msg += f"\n┠ <b>SubFolder</b> → {folders}"
+                msg += f"\n┠ <b>File</b> → {files}"
 
             multi_link_msg = ""
             multi_links = []
@@ -489,7 +489,7 @@ class TaskListener(TaskConfig):
                         )
                     elif result.get("link"):
                         multi_links.append(
-                            (f"{service.capitalize()} Link", result["link"])
+                            (f"Tautan {service.capitalize()}", result["link"])
                         )
                 multi_link_msg = multi_link_msg.strip()
                 link = None  # Disable single link button logic
@@ -503,7 +503,7 @@ class TaskListener(TaskConfig):
             ):
                 buttons = ButtonMaker()
                 if link and Config.SHOW_CLOUD_LINK:
-                    buttons.url_button("☁️ Cloud Link", link)
+                    buttons.url_button("☁️ Tautan Cloud", link)
                 elif multi_links:
                     for name, url in multi_links:
                         buttons.url_button(name, url)
@@ -515,7 +515,7 @@ class TaskListener(TaskConfig):
                     share_url = f"{Config.RCLONE_SERVE_URL}/{remote}/{url_path}"
                     if mime_type == "Folder":
                         share_url += "/"
-                    buttons.url_button("🔗 Rclone Link", share_url)
+                    buttons.url_button("🔗 Tautan Rclone", share_url)
                 if not rclone_path and dir_id:
                     INDEX_URL = ""
                     if self.private_link:
@@ -525,19 +525,19 @@ class TaskListener(TaskConfig):
                     if INDEX_URL and self.name:
                         safe_name = rutils.quote(self.name.strip("/"))
                         share_url = f"{INDEX_URL}/{safe_name}"
-                        buttons.url_button("⚡ Index Link", share_url)
+                        buttons.url_button("⚡ Tautan Index", share_url)
                         if mime_type.startswith(("image", "video", "audio")):
                             share_urls = f"{share_url}?a=view"
-                            buttons.url_button("🌐 View Link", share_urls)
+                            buttons.url_button("🌐 Tautan Lihat", share_urls)
                 button = buttons.build_menu(2)
             else:
                 if not multi_link_msg:
                     msg += f"\n┃\n┠ Path: <code>{rclone_path}</code>"
                 button = None
-            msg += f"\n┃\n┖ <b>Task By</b> → {self.tag}\n\n"
+            msg += f"\n┃\n┖ <b>Tugas Oleh</b> → {self.tag}\n\n"
             group_msg = (
-                msg + "〶 <b><u>Action Performed :</u></b>\n"
-                "⋗ <i>Cloud link(s) have been sent to User PM</i>\n\n"
+                msg + "〶 <b><u>Tindakan Dilakukan :</u></b>\n"
+                "⋗ <i>Tautan cloud telah dikirim ke PM Pengguna</i>\n\n"
             )
 
             if multi_link_msg:
@@ -585,21 +585,21 @@ class TaskListener(TaskConfig):
             count = len(task_dict)
         await self.remove_from_same_dir()
         msg = (
-            f"""〶 <b><i><u>Limit Breached:</u></i></b>
+            f"""〶 <b><i><u>Batas Terlampaui:</u></i></b>
 │
-┟ <b>Task Size</b> → {get_readable_file_size(self.size)}
-┠ <b>In Mode</b> → {self.mode[0]}
-┠ <b>Out Mode</b> → {self.mode[1]}
+┟ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}
+┠ <b>Mode Masuk</b> → {self.mode[0]}
+┠ <b>Mode Keluar</b> → {self.mode[1]}
 {error}"""
             if is_limit
-            else f"""<i><b>〶 Download Stopped!</b></i>
+            else f"""<i><b>〶 Unduhan Berhenti!</b></i>
 │
-┟ <b>Due To</b> → {escape(str(error))}
-┠ <b>Task Size</b> → {get_readable_file_size(self.size)}
-┠ <b>Time Taken</b> → {get_readable_time(time() - self.message.date.timestamp())}
-┠ <b>In Mode</b> → {self.mode[0]}
-┠ <b>Out Mode</b> → {self.mode[1]}
-┖ <b>Task By</b> → {self.tag}"""
+┟ <b>Karena</b> → {escape(str(error))}
+┠ <b>Ukuran Tugas</b> → {get_readable_file_size(self.size)}
+┠ <b>Waktu Ditempuh</b> → {get_readable_time(time() - self.message.date.timestamp())}
+┠ <b>Mode Masuk</b> → {self.mode[0]}
+┠ <b>Mode Keluar</b> → {self.mode[1]}
+┖ <b>Tugas Oleh</b> → {self.tag}"""
         )
 
         await send_message(self.message, msg, button)
