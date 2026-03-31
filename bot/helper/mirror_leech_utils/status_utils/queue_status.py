@@ -41,12 +41,12 @@ class QueueStatus:
 
     async def cancel_task(self):
         self.listener.is_cancelled = True
-        LOGGER.info(f"Cancelling Queue{self._status}: {self.listener.name}")
+        LOGGER.info(f"Membatalkan Antrean {self._status}: {self.listener.name}")
         if self._status == "dl":
             await self.listener.on_download_error(
-                "task have been removed from queue/download"
+                "Tugas telah dihapus dari antrean unduhan"
             )
         else:
             await self.listener.on_upload_error(
-                "task have been removed from queue/upload"
+                "Tugas telah dihapus dari antrean unggahan"
             )
