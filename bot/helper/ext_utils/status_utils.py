@@ -233,17 +233,15 @@ async def get_readable_message(sid, is_user, page_no=1, status="All", page_step=
             msg += f"\n┖ <b>Sub Name</b> → <i>{task.listener.subname}</i>"
         elapsed = time() - task.listener.message.date.timestamp()
 
-        try:
-        user = task.listener.message.from_user
         if user:
-            msg += f"\n\n<b>Task By {user.mention(style='html')} </b> ( #ID{user.id} )"
-        else:
-            sender = task.listener.message.sender_chat
-            name = sender.title if sender else "Sistem Auto/RSS"
-            uid = sender.id if sender else "Unknown"
-            msg += f"\n\n<b>Task By {name} </b> ( #ID{uid} )"
-    except Exception:
-        msg += f"\n\n<b>Task By Sistem/Unknown </b>"
+        msg += f"\n\n<b>Task By {user.mention(style='html')} </b> ( #ID{user.id} )"
+    else:
+        sender = task.listener.message.sender_chat
+        name = sender.title if sender else "Sistem Auto/RSS"
+        uid = sender.id if sender else "Unknown"
+        msg += f"\n\n<b>Task By {name} </b> ( #ID{uid} )"
+        if task.listener.is_super_chat:
+            msg += f" <i>[<a href='{task.listener.message.link}'>Link</a>]</i>"
 
         if (
             tstatus not in [MirrorStatus.STATUS_SEED, MirrorStatus.STATUS_QUEUEUP]
