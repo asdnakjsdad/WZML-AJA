@@ -41,26 +41,26 @@ headers = {
 async def rss_menu(event):
     user_id = event.from_user.id
     buttons = ButtonMaker()
-    buttons.data_button("Subscribe", f"rss sub {user_id}")
-    buttons.data_button("Subscriptions", f"rss list {user_id} 0")
-    buttons.data_button("Get Items", f"rss get {user_id}")
+    buttons.data_button("Berlangganan", f"rss sub {user_id}")
+    buttons.data_button("Langganan Saya", f"rss list {user_id} 0")
+    buttons.data_button("Ambil Item", f"rss get {user_id}")
     buttons.data_button("Edit", f"rss edit {user_id}")
-    buttons.data_button("Pause", f"rss pause {user_id}")
-    buttons.data_button("Resume", f"rss resume {user_id}")
-    buttons.data_button("Unsubscribe", f"rss unsubscribe {user_id}")
+    buttons.data_button("Jeda", f"rss pause {user_id}")
+    buttons.data_button("Lanjutkan", f"rss resume {user_id}")
+    buttons.data_button("Batal Langganan", f"rss unsubscribe {user_id}")
     if await CustomFilters.sudo("", event):
-        buttons.data_button("All Subscriptions", f"rss listall {user_id} 0")
-        buttons.data_button("Pause All", f"rss allpause {user_id}")
-        buttons.data_button("Resume All", f"rss allresume {user_id}")
-        buttons.data_button("Unsubscribe All", f"rss allunsub {user_id}")
-        buttons.data_button("Delete User", f"rss deluser {user_id}")
+        buttons.data_button("Semua Langganan", f"rss listall {user_id} 0")
+        buttons.data_button("Jeda Semua", f"rss allpause {user_id}")
+        buttons.data_button("Lanjutkan Semua", f"rss allresume {user_id}")
+        buttons.data_button("Batal Semua Langganan", f"rss allunsub {user_id}")
+        buttons.data_button("Hapus Pengguna", f"rss deluser {user_id}")
         if scheduler.running:
-            buttons.data_button("Shutdown Rss", f"rss shutdown {user_id}")
+            buttons.data_button("Matikan RSS", f"rss shutdown {user_id}")
         else:
-            buttons.data_button("Start Rss", f"rss start {user_id}")
-    buttons.data_button("Close", f"rss close {user_id}")
+            buttons.data_button("Mulai RSS", f"rss start {user_id}")
+    buttons.data_button("Tutup", f"rss close {user_id}")
     button = buttons.build_menu(2)
-    msg = f"Rss Menu | Users: {len(rss_dict)} | Running: {scheduler.running}"
+    msg = f"Menu RSS | Pengguna: {len(rss_dict)} | Berjalan: {scheduler.running}"
     return msg, button
 
 
@@ -90,20 +90,20 @@ async def rss_sub(_, message, pre_event):
         if len(args) < 2:
             await send_message(
                 message,
-                f"{item}. Wrong Input format. Read help message before adding new subcription!",
+                f"{item}. Format input salah. Baca pesan bantuan sebelum menambahkan langganan baru!",
             )
             continue
         title = args[0].strip()
         if (user_feeds := rss_dict.get(user_id, False)) and title in user_feeds:
             await send_message(
-                message, f"This title {title} already subscribed! Choose another title!"
+                message, f"Judul {title} ini sudah berlangganan! Pilih judul lain!"
             )
             continue
         feed_link = args[1].strip()
         if feed_link.startswith(("-inf", "-exf", "-c")):
             await send_message(
                 message,
-                f"Wrong input in line {index}! Add Title! Read the example!",
+                f"Input salah di baris {index}! Tambahkan Judul! Baca contohnya!",
             )
             continue
         inf_lists = []
@@ -149,21 +149,21 @@ async def rss_sub(_, message, pre_event):
                 size = get_size_bytes(sizes[0])
             else:
                 size = 0
-            msg += "<b>Subscribed!</b>"
-            msg += f"\n<b>Title: </b><code>{title}</code>\n<b>Feed Url: </b>{feed_link}"
-            msg += f"\n<b>latest record for </b>{rss_d.feed.title}:"
+            msg += "<b>Berhasil Berlangganan!</b>"
+            msg += f"\n<b>Judul: </b><code>{title}</code>\n<b>Url Feed: </b>{feed_link}"
+            msg += f"\n<b>catatan terbaru untuk </b>{rss_d.feed.title}:"
             msg += (
-                f"\nName: <code>{last_title.replace('>', '').replace('<', '')}</code>"
+                f"\nNama: <code>{last_title.replace('>', '').replace('<', '')}</code>"
             )
             try:
                 last_link = rss_d.entries[0]["links"][1]["href"]
             except IndexError:
                 last_link = rss_d.entries[0]["link"]
-            msg += f"\n<b>Link: </b><code>{last_link}</code>"
+            msg += f"\n<b>Tautan: </b><code>{last_link}</code>"
             if size:
-                msg += f"\nSize: {get_readable_file_size(size)}"
-            msg += f"\n<b>Command: </b><code>{cmd}</code>"
-            msg += f"\n<b>Filters:-</b>\ninf: <code>{inf}</code>\nexf: <code>{exf}</code>\n<b>sensitive: </b>{stv}"
+                msg += f"\nUkuran: {get_readable_file_size(size)}"
+            msg += f"\n<b>Perintah: </b><code>{cmd}</code>"
+            msg += f"\n<b>Filter:-</b>\ninf: <code>{inf}</code>\nexf: <code>{exf}</code>\n<b>sensitif: </b>{stv}"
             async with rss_dict_lock:
                 if rss_dict.get(user_id, False):
                     rss_dict[user_id][title] = {
@@ -195,7 +195,7 @@ async def rss_sub(_, message, pre_event):
                 f"Rss Feed Added: id: {user_id} - title: {title} - link: {feed_link} - c: {cmd} - inf: {inf} - exf: {exf} - stv {stv}"
             )
         except (IndexError, AttributeError) as e:
-            emsg = f"The link: {feed_link} doesn't seem to be a RSS feed or it's region-blocked!"
+            emsg = f"Tautan: {feed_link} sepertinya bukan feed RSS atau diblokir di wilayah ini!"
             await send_message(message, emsg + "\nError: " + str(e))
         except Exception as e:
             await send_message(message, str(e))
@@ -230,6 +230,10 @@ async def rss_update(_, message, pre_event, state):
     titles = message.text.split()
     is_sudo = await CustomFilters.sudo("", message)
     updated = []
+    
+    state_id = {"pause": "jeda", "resume": "lanjut", "unsubscribe": "batal langganan"}
+    status_indo = state_id.get(state, state)
+
     for title in titles:
         title = title.strip()
         if not (res := rss_dict[user_id].get(title, False)):
@@ -237,11 +241,11 @@ async def rss_update(_, message, pre_event, state):
                 res, user_id = await get_user_id(title)
             if not res:
                 user_id = message.from_user.id
-                await send_message(message, f"{title} not found!")
+                await send_message(message, f"{title} tidak ditemukan!")
                 continue
         istate = rss_dict[user_id][title].get("paused", False)
         if istate and state == "pause" or not istate and state == "resume":
-            await send_message(message, f"{title} already {state}d!")
+            await send_message(message, f"{title} sudah di{status_indo}!")
             continue
         async with rss_dict_lock:
             updated.append(title)
@@ -269,7 +273,7 @@ async def rss_update(_, message, pre_event, state):
         LOGGER.info(f"Rss link with Title(s): {updated} has been {state}d!")
         await send_message(
             message,
-            f"Rss links with Title(s): <code>{updated}</code> has been {state}d!",
+            f"Tautan RSS dengan Judul: <code>{updated}</code> telah di{status_indo}!",
         )
         if rss_dict.get(user_id):
             await database.rss_update(user_id)
@@ -280,7 +284,7 @@ async def rss_list(query, start, all_users=False):
     user_id = query.from_user.id
     buttons = ButtonMaker()
     if all_users:
-        list_feed = f"<b>All subscriptions | Page: {int(start / 5)} </b>"
+        list_feed = f"<b>Semua langganan | Halaman: {int(start / 5)} </b>"
         async with rss_dict_lock:
             keysCount = sum(len(v.keys()) for v in rss_dict.values())
             index = 0
@@ -288,32 +292,32 @@ async def rss_list(query, start, all_users=False):
                 for index, (title, data) in enumerate(
                     list(titles.items())[start : 5 + start]
                 ):
-                    list_feed += f"\n\n<b>Title:</b> <code>{title}</code>\n"
-                    list_feed += f"<b>Feed Url:</b> <code>{data['link']}</code>\n"
-                    list_feed += f"<b>Command:</b> <code>{data['command']}</code>\n"
+                    list_feed += f"\n\n<b>Judul:</b> <code>{title}</code>\n"
+                    list_feed += f"<b>Url Feed:</b> <code>{data['link']}</code>\n"
+                    list_feed += f"<b>Perintah:</b> <code>{data['command']}</code>\n"
                     list_feed += f"<b>Inf:</b> <code>{data['inf']}</code>\n"
                     list_feed += f"<b>Exf:</b> <code>{data['exf']}</code>\n"
-                    list_feed += f"<b>Sensitive:</b> <code>{data.get('sensitive', False)}</code>\n"
-                    list_feed += f"<b>Paused:</b> <code>{data['paused']}</code>\n"
-                    list_feed += f"<b>User:</b> {data['tag'].replace('@', '', 1)}"
+                    list_feed += f"<b>Sensitif:</b> <code>{data.get('sensitive', False)}</code>\n"
+                    list_feed += f"<b>Dijeda:</b> <code>{data['paused']}</code>\n"
+                    list_feed += f"<b>Pengguna:</b> {data['tag'].replace('@', '', 1)}"
                     index += 1
                     if index == 5:
                         break
     else:
-        list_feed = f"<b>Your subscriptions | Page: {int(start / 5)} </b>"
+        list_feed = f"<b>Langganan Anda | Halaman: {int(start / 5)} </b>"
         async with rss_dict_lock:
             keysCount = len(rss_dict.get(user_id, {}).keys())
             for title, data in list(rss_dict[user_id].items())[start : 5 + start]:
-                list_feed += f"\n\n<b>Title:</b> <code>{title}</code>\n<b>Feed Url: </b><code>{data['link']}</code>\n"
-                list_feed += f"<b>Command:</b> <code>{data['command']}</code>\n"
+                list_feed += f"\n\n<b>Judul:</b> <code>{title}</code>\n<b>Url Feed: </b><code>{data['link']}</code>\n"
+                list_feed += f"<b>Perintah:</b> <code>{data['command']}</code>\n"
                 list_feed += f"<b>Inf:</b> <code>{data['inf']}</code>\n"
                 list_feed += f"<b>Exf:</b> <code>{data['exf']}</code>\n"
                 list_feed += (
-                    f"<b>Sensitive:</b> <code>{data.get('sensitive', False)}</code>\n"
+                    f"<b>Sensitif:</b> <code>{data.get('sensitive', False)}</code>\n"
                 )
-                list_feed += f"<b>Paused:</b> <code>{data['paused']}</code>\n"
-    buttons.data_button("Back", f"rss back {user_id}")
-    buttons.data_button("Close", f"rss close {user_id}")
+                list_feed += f"<b>Dijeda:</b> <code>{data['paused']}</code>\n"
+    buttons.data_button("Kembali", f"rss back {user_id}")
+    buttons.data_button("Tutup", f"rss close {user_id}")
     if keysCount > 5:
         for x in range(0, keysCount, 5):
             buttons.data_button(
@@ -333,7 +337,7 @@ async def rss_get(_, message, pre_event):
     if len(args) < 2:
         await send_message(
             message,
-            f"{args}. Wrong Input format. You should add number of the items you want to get. Read help message before adding new subcription!",
+            f"{args}. Format input salah. Anda harus menambahkan jumlah item yang ingin diambil. Baca pesan bantuan sebelum menambahkan langganan baru!",
         )
         await update_rss_menu(pre_event)
         return
@@ -344,7 +348,7 @@ async def rss_get(_, message, pre_event):
         if data and count > 0:
             try:
                 msg = await send_message(
-                    message, f"Getting the last <b>{count}</b> item(s) from {title}"
+                    message, f"Mengambil <b>{count}</b> item terakhir dari {title}"
                 )
                 async with AsyncClient(
                     headers=headers, follow_redirects=True, timeout=60, verify=False
@@ -358,8 +362,8 @@ async def rss_get(_, message, pre_event):
                         link = rss_d.entries[item_num]["links"][1]["href"]
                     except IndexError:
                         link = rss_d.entries[item_num]["link"]
-                    item_info += f"<b>Name: </b><code>{rss_d.entries[item_num]['title'].replace('>', '').replace('<', '')}</code>\n"
-                    item_info += f"<b>Link: </b><code>{link}</code>\n\n"
+                    item_info += f"<b>Nama: </b><code>{rss_d.entries[item_num]['title'].replace('>', '').replace('<', '')}</code>\n"
+                    item_info += f"<b>Tautan: </b><code>{link}</code>\n\n"
                 item_info_ecd = item_info.encode()
                 if len(item_info_ecd) > 4000:
                     with BytesIO(item_info_ecd) as out_file:
@@ -371,16 +375,16 @@ async def rss_get(_, message, pre_event):
             except IndexError as e:
                 LOGGER.error(str(e))
                 await edit_message(
-                    msg, "Parse depth exceeded. Try again with a lower value."
+                    msg, "Batas kedalaman analisis terlampaui. Coba lagi dengan nilai yang lebih rendah."
                 )
             except Exception as e:
                 LOGGER.error(str(e))
                 await edit_message(msg, str(e))
         else:
-            await send_message(message, "Enter a valid title. Title not found!")
+            await send_message(message, "Masukkan judul yang valid. Judul tidak ditemukan!")
     except Exception as e:
         LOGGER.error(str(e))
-        await send_message(message, f"Enter a valid value!. {e}")
+        await send_message(message, f"Masukkan nilai yang valid!. {e}")
     await update_rss_menu(pre_event)
 
 
@@ -396,11 +400,11 @@ async def rss_edit(_, message, pre_event):
         if len(args) < 2:
             await send_message(
                 message,
-                f"{item}. Wrong Input format. Read help message before editing!",
+                f"{item}. Format input salah. Baca pesan bantuan sebelum mengedit!",
             )
             continue
         elif not rss_dict[user_id].get(title, False):
-            await send_message(message, "Enter a valid title. Title not found!")
+            await send_message(message, "Masukkan judul yang valid. Judul tidak ditemukan!")
             continue
         updated = True
         inf_lists = []
@@ -477,7 +481,7 @@ async def rss_listener(client, query):
     data = query.data.split()
     if int(data[2]) != user_id and not await CustomFilters.sudo("", query):
         await query.answer(
-            text="You don't have permission to use these buttons!", show_alert=True
+            text="Anda tidak memiliki izin untuk menggunakan tombol ini!", show_alert=True
         )
     elif data[1] == "close":
         await query.answer()
@@ -491,8 +495,8 @@ async def rss_listener(client, query):
         await query.answer()
         handler_dict[user_id] = False
         buttons = ButtonMaker()
-        buttons.data_button("Back", f"rss back {user_id}")
-        buttons.data_button("Close", f"rss close {user_id}")
+        buttons.data_button("Kembali", f"rss back {user_id}")
+        buttons.data_button("Tutup", f"rss close {user_id}")
         button = buttons.build_menu(2)
         await edit_message(message, RSS_HELP_MESSAGE, button)
         pfunc = partial(rss_sub, pre_event=query)
@@ -500,7 +504,7 @@ async def rss_listener(client, query):
     elif data[1] == "list":
         handler_dict[user_id] = False
         if len(rss_dict.get(int(data[2]), {})) == 0:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
         else:
             await query.answer()
             start = int(data[3])
@@ -508,16 +512,16 @@ async def rss_listener(client, query):
     elif data[1] == "get":
         handler_dict[user_id] = False
         if len(rss_dict.get(int(data[2]), {})) == 0:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
         else:
             await query.answer()
             buttons = ButtonMaker()
-            buttons.data_button("Back", f"rss back {user_id}")
-            buttons.data_button("Close", f"rss close {user_id}")
+            buttons.data_button("Kembali", f"rss back {user_id}")
+            buttons.data_button("Tutup", f"rss close {user_id}")
             button = buttons.build_menu(2)
             await edit_message(
                 message,
-                "Send one title with value separated by space get last X items.\nTitle Value\nTimeout: 60 sec.",
+                "Kirim satu judul dengan nilai yang dipisahkan oleh spasi untuk mengambil X item terakhir.\nJudul Nilai\nWaktu Habis: 60 dtk.",
                 button,
             )
             pfunc = partial(rss_get, pre_event=query)
@@ -525,22 +529,23 @@ async def rss_listener(client, query):
     elif data[1] in ["unsubscribe", "pause", "resume"]:
         handler_dict[user_id] = False
         if len(rss_dict.get(int(data[2]), {})) == 0:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
         else:
             await query.answer()
             buttons = ButtonMaker()
-            buttons.data_button("Back", f"rss back {user_id}")
+            buttons.data_button("Kembali", f"rss back {user_id}")
             if data[1] == "pause":
-                buttons.data_button("Pause AllMyFeeds", f"rss uallpause {user_id}")
+                buttons.data_button("Jeda Semua Feed Saya", f"rss uallpause {user_id}")
             elif data[1] == "resume":
-                buttons.data_button("Resume AllMyFeeds", f"rss uallresume {user_id}")
+                buttons.data_button("Lanjut Semua Feed Saya", f"rss uallresume {user_id}")
             elif data[1] == "unsubscribe":
-                buttons.data_button("Unsub AllMyFeeds", f"rss uallunsub {user_id}")
-            buttons.data_button("Close", f"rss close {user_id}")
+                buttons.data_button("Batal Semua Feed Saya", f"rss uallunsub {user_id}")
+            buttons.data_button("Tutup", f"rss close {user_id}")
             button = buttons.build_menu(2)
+            status_indo = {"pause": "jeda", "resume": "lanjutkan", "unsubscribe": "batalkan langganan"}.get(data[1], data[1])
             await edit_message(
                 message,
-                f"Send one or more rss titles separated by space to {data[1]}.\nTimeout: 60 sec.",
+                f"Kirim satu atau lebih judul RSS dipisahkan oleh spasi untuk di{status_indo}.\nWaktu Habis: 60 dtk.",
                 button,
             )
             pfunc = partial(rss_update, pre_event=query, state=data[1])
@@ -548,20 +553,20 @@ async def rss_listener(client, query):
     elif data[1] == "edit":
         handler_dict[user_id] = False
         if len(rss_dict.get(int(data[2]), {})) == 0:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
         else:
             await query.answer()
             buttons = ButtonMaker()
-            buttons.data_button("Back", f"rss back {user_id}")
-            buttons.data_button("Close", f"rss close {user_id}")
+            buttons.data_button("Kembali", f"rss back {user_id}")
+            buttons.data_button("Tutup", f"rss close {user_id}")
             button = buttons.build_menu(2)
-            msg = """Send one or more rss titles with new filters or command separated by new line.
-Examples:
-Title1 -c mirror -up remote:path/subdir -exf none -inf 1080 or 720 -stv true
-Title2 -c none -inf none -stv false
-Title3 -c mirror -rcf xxx -up xxx -z pswd -stv false
-Note: Only what you provide will be edited, the rest will be the same like example 2: exf will stay same as it is.
-Timeout: 60 sec. Argument -c for command and arguments
+            msg = """Kirim satu atau lebih judul RSS dengan filter atau perintah baru yang dipisahkan oleh baris baru.
+Contoh:
+Judul1 -c mirror -up remote:path/subdir -exf none -inf 1080 or 720 -stv true
+Judul2 -c none -inf none -stv false
+Judul3 -c mirror -rcf xxx -up xxx -z pswd -stv false
+Catatan: Hanya apa yang Anda berikan yang akan diedit, sisanya akan tetap sama seperti contoh 2: exf akan tetap seperti semula.
+Waktu Habis: 60 dtk. Argumen -c untuk perintah dan argumennya
             """
             await edit_message(message, msg, button)
             pfunc = partial(rss_edit, pre_event=query)
@@ -569,7 +574,7 @@ Timeout: 60 sec. Argument -c for command and arguments
     elif data[1].startswith("uall"):
         handler_dict[user_id] = False
         if len(rss_dict.get(int(data[2]), {})) == 0:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
             return
         await query.answer()
         if data[1].endswith("unsub"):
@@ -592,7 +597,7 @@ Timeout: 60 sec. Argument -c for command and arguments
         await update_rss_menu(query)
     elif data[1].startswith("all"):
         if len(rss_dict) == 0:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
             return
         await query.answer()
         if data[1].endswith("unsub"):
@@ -621,20 +626,20 @@ Timeout: 60 sec. Argument -c for command and arguments
             await database.rss_update_all()
     elif data[1] == "deluser":
         if len(rss_dict) == 0:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
         else:
             await query.answer()
             buttons = ButtonMaker()
-            buttons.data_button("Back", f"rss back {user_id}")
-            buttons.data_button("Close", f"rss close {user_id}")
+            buttons.data_button("Kembali", f"rss back {user_id}")
+            buttons.data_button("Tutup", f"rss close {user_id}")
             button = buttons.build_menu(2)
-            msg = "Send one or more user_id separated by space to delete their resources.\nTimeout: 60 sec."
+            msg = "Kirim satu atau lebih user_id dipisahkan oleh spasi untuk menghapus datanya.\nWaktu Habis: 60 dtk."
             await edit_message(message, msg, button)
             pfunc = partial(rss_delete, pre_event=query)
             await event_handler(client, query, pfunc)
     elif data[1] == "listall":
         if not rss_dict:
-            await query.answer(text="No subscriptions!", show_alert=True)
+            await query.answer(text="Tidak ada langganan!", show_alert=True)
         else:
             await query.answer()
             start = int(data[3])
@@ -646,7 +651,7 @@ Timeout: 60 sec. Argument -c for command and arguments
             await sleep(0.5)
             await update_rss_menu(query)
         else:
-            await query.answer(text="Already Stopped!", show_alert=True)
+            await query.answer(text="Sudah Berhenti!", show_alert=True)
     elif data[1] == "start":
         if not scheduler.running:
             await query.answer()
@@ -654,7 +659,7 @@ Timeout: 60 sec. Argument -c for command and arguments
             scheduler.start()
             await update_rss_menu(query)
         else:
-            await query.answer(text="Already Running!", show_alert=True)
+            await query.answer(text="Sudah Berjalan!", show_alert=True)
 
 
 async def rss_monitor():
@@ -780,10 +785,10 @@ async def rss_monitor():
                         if not feed_msg.startswith("/"):
                             feed_msg = f"/{feed_msg}"
                     else:
-                        feed_msg = f"<b>Name: </b><code>{item_title.replace('>', '').replace('<', '')}</code>"
-                        feed_msg += f"\n\n<b>Link: </b><code>{url}</code>"
+                        feed_msg = f"<b>Nama: </b><code>{item_title.replace('>', '').replace('<', '')}</code>"
+                        feed_msg += f"\n\n<b>Tautan: </b><code>{url}</code>"
                         if size:
-                            feed_msg += f"\n<b>Size: </b>{get_readable_file_size(size)}"
+                            feed_msg += f"\n<b>Ukuran: </b>{get_readable_file_size(size)}"
                     feed_msg += (
                         f"\n<b>Tag: </b><code>{data['tag']}</code> <code>{user}</code>"
                     )
