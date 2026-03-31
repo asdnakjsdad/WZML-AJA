@@ -229,7 +229,7 @@ async def get_tg_link_message(link):
             r"tg:\/\/(openmessage)\?user_id=([0-9]+)&message_id=([0-9-]+)", link
         )
         if not TgClient.user:
-            raise TgLinkException("USER_SESSION_STRING required for this private link!")
+            raise TgLinkException("USER_SESSION_STRING diperlukan untuk tautan privat ini!")
 
     chat = msg[2]
     msg_id = msg[3]
@@ -275,12 +275,12 @@ async def get_tg_link_message(link):
             )
         except Exception as e:
             raise TgLinkException(
-                f"You don't have access to this chat!. ERROR: {e}"
+                f"Kamu tidak memiliki akses ke obrolan ini!. ERROR: {e}"
             ) from e
         if not user_message.empty:
             return (links, "user") if links else (user_message, "user")
     else:
-        raise TgLinkException("Private: Please report!")
+        raise TgLinkException("Privat: Silakan laporkan!")
 
 
 async def update_status_message(sid, force=False):
