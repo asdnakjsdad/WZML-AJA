@@ -45,7 +45,7 @@ async def cancel(_, message):
             return
     elif len(msg) == 1:
         msg = (
-            "Balas ke pesan Perintah aktif yang digunakan untuk memulai unduhan"
+            "Balas ke pesan perintah aktif yang digunakan untuk memulai unduhan"
             f" atau kirim <code>/{BotCommands.CancelTaskCommand[0]} GID</code> untuk membatalkannya!"
         )
         await send_message(message, msg)
@@ -55,7 +55,7 @@ async def cancel(_, message):
         and task.listener.user_id != user_id
         and (user_id not in user_data or not user_data[user_id].get("SUDO"))
     ):
-        await send_message(message, "Tugas ini bukan untukmu!")
+        await send_message(message, "Tugas ini bukan milikmu!")
         return
     obj = task.task()
     await obj.cancel_task()
@@ -73,13 +73,15 @@ async def cancel_multi(_, query):
         multi_tags.discard(int(data[2]))
         msg = "Diberhentikan!"
     else:
-        msg = "Sudah Berhenti/Selesai!"
+        msg = "Sudah Berhenti atau Selesai!"
     await query.answer(msg, show_alert=True)
     await delete_message(query.message, query.message.reply_to_message)
 
 
 async def cancel_all(status, user_id):
-    matches = await get_all_tasks(status.strip(), user_id)
+    # Logika untuk menangani teks 'Semua' kembali ke 'All' agar dimengerti sistem
+    req_status = "All" if status.strip() == "Semua" else status.strip()
+    matches = await get_all_tasks(req_status, user_id)
     if not matches:
         return False
     for task in matches:
@@ -120,7 +122,7 @@ def create_cancel_buttons(is_sudo, user_id=""):
     )
     buttons.data_button("FFmpeg", f"canall ms {MirrorStatus.STATUS_FFMPEG} {user_id}")
     buttons.data_button("Dijeda", f"canall ms {MirrorStatus.STATUS_PAUSED} {user_id}")
-    buttons.data_button("Semua", f"canall ms All {user_id}")
+    buttons.data_button("Semua", f"canall ms Semua {user_id}")
     if is_sudo:
         if user_id:
             buttons.data_button("Semua Tugas Bot", f"canall bot ms {user_id}")
@@ -139,7 +141,7 @@ async def cancel_all_buttons(_, message):
         return
     is_sudo = await CustomFilters.sudo("", message)
     button = create_cancel_buttons(is_sudo, message.from_user.id)
-    can_msg = await send_message(message, "Pilih tugas yang ingin dibatalkan!", button)
+    can_msg = await send_message(message, "Pilih kategori tugas yang ingin dibatalkan:", button)
     await auto_delete_message(message, can_msg)
 
 
@@ -158,28 +160,31 @@ async def cancel_all_update(_, query):
         await delete_message(reply_to, message)
     elif data[1] == "back":
         button = create_cancel_buttons(is_sudo, user_id)
-        await edit_message(message, "Pilih tugas yang ingin dibatalkan!", button)
+        await edit_message(message, "Pilih kategori tugas yang ingin dibatalkan:", button)
     elif data[1] == "bot":
         button = create_cancel_buttons(is_sudo, "")
-        await edit_message(message, "Pilih tugas yang ingin dibatalkan!", button)
+        await edit_message(message, "Pilih kategori tugas yang ingin dibatalkan:", button)
     elif data[1] == "user":
         button = create_cancel_buttons(is_sudo, query.from_user.id)
-        await edit_message(message, "Pilih tugas yang ingin dibatalkan!", button)
+        await edit_message(message, "Pilih kategori tugas yang ingin dibatalkan:", button)
     elif data[1] == "ms":
         buttons = button_build.ButtonMaker()
         buttons.data_button("Ya!", f"canall {data[2]} confirm {user_id}")
         buttons.data_button("Kembali", f"canall back confirm {user_id}")
         buttons.data_button("Tutup", f"canall close confirm {user_id}")
         button = buttons.build_menu(2)
+        # Mengubah tampilan konfirmasi agar lebih manusiawi
+        display_status = data[2]
         await edit_message(
-            message, f"Apakah kamu yakin ingin membatalkan semua tugas {data[2]}?", button
+            message, f"Apakah kamu yakin ingin membatalkan semua tugas <b>{display_status}</b>?", button
         )
     else:
         button = create_cancel_buttons(is_sudo, user_id)
-        await edit_message(message, "Pilih tugas yang ingin dibatalkan.", button)
+        await edit_message(message, "Memproses pembatalan tugas...", button)
         res = await cancel_all(data[1], user_id)
         if not res:
-            await send_message(reply_to, f"Tidak ada tugas {data[1]} yang cocok!")
+            await send_message(reply_to, f"Tidak ada tugas {data[1]} yang cocok untuk dibatalkan!")
+
 
 @new_task
 async def get_cancel_message():
